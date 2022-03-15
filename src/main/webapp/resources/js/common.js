@@ -23,9 +23,11 @@ function makeInputElement(type, name, value, placeholder){
 	return input;
 }
 function getAjaxData(action,data,fn,method){
+	alert(data + "??");
 	const ajax = new XMLHttpRequest();
 		ajax.onreadystatechange = function() {
-			if ( ajax.readyState== 4 && ajax.status == 200) {		
+			if ( ajax.readyState== 4 && ajax.status == 200) {
+				alert(ajax.responseText);
 				window[fn](JSON.parse(ajax.responseText));						
 			}
 		};
@@ -35,7 +37,7 @@ function getAjaxData(action,data,fn,method){
 			ajax.send();
 		}else{
 			ajax.open("post", action, true);
-			ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");	
+			ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded; charset=utf-8");	
 			ajax.send(data);
 		}
 		
@@ -45,26 +47,17 @@ function sendMessage(message){
 }
 
 function accessOut(){}
-function getPage(action){
-	const form = makeForm("", action, "post");
-	const userId=document.getElementsByName("userId")[0].value;
-	const userName=document.getElementsByName("userName")[0].value;
-	const userCode=document.getElementsByName("userCode")[0].value;
-	const acCode=document.getElementsByName("acCode")[0].value;
-	const studentId=document.getElementsByName("studentId")[0].value;
-	const tier=document.getElementsByName("tier")[0].value;
-	
-	const clientData = [makeInputElement("hidden", "userId", userId, ""),
-					    makeInputElement("hidden", "userName", userName, ""),
-					    makeInputElement("hidden", "userCode", userCode, ""),
-					    makeInfputElement("hidden", "acCode", acCode, ""),
-					    makeInfputElement("hidden", "studentId", studentId, ""),
-					    makeInfputElement("hidden", "tier", tier, "")];
-	
-	for(idx=0; idx<clientData.length;idx++){
-		form.appendChild(clientData[idx]);
-	}		
 
-	document.body.appendChild(form);
+function getPage(formName,action){
+   const form = document.getElementsByName(formName)[0];
+      form.setAttribute("action",action);
+      form.submit();
+   
+}
+
+
+function findPassword(formName) {
+	const form = document.getElementsByName(formName)[0];
+	/* input개체에 대한 값의 유효성 체크 */
 	form.submit();
 }

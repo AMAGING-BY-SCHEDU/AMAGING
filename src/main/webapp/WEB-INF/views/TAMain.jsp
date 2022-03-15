@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>TAMain</title>
+ <script src="resources/js/common.js"></script>
 <script src=""></script>
 <script>
 	function test() {
@@ -17,6 +18,23 @@
 	function ajax() {
 		
 	}
+	function makeInputElement(type, name, value, placeholder){
+		const input = document.createElement("input");
+		input.setAttribute("type", type);
+		input.setAttribute("name", name);
+		if(value != ""){input.setAttribute("value", value);}
+		if(placeholder != ""){input.setAttribute("placeholder", placeholder);}
+		
+		return input;
+	}
+	/*페이지 이동*/
+	function getPage3(userCode) {
+	      const f = document.getElementsByName("TApage")[0];
+	      const hidden = makeInputElement("hidden","userCode",userCode,"");
+	      f.appendChild(hidden);
+	      document.getElementsByName("userCode")[0];
+	      f.submit();
+	   }
 </script>
 <style>
 #basic {
@@ -186,7 +204,7 @@ h1{color:#A6A6A6; font-size:30%; position:absolute; left:34%; top:36%; }
 
 </head>
 <body onLoad="">
-	<form name="" action="/" method="get">
+	<form name="TApage" action="/LoginPage" method="get">
 		<div id="basic">
 			<div id="body">
 				<div id="logo"></div>
@@ -195,8 +213,8 @@ h1{color:#A6A6A6; font-size:30%; position:absolute; left:34%; top:36%; }
 				<div id="subphoto"></div>
 			    </div>
 				<div id="loginMom">
-					<div id="pointer"  onClick="" ><span id="st"> 선생님로그인</span></div> 
-					<div  id="pointer2"  onClick=""><span id="pa">관리자로그인</span></div>
+					<div id="pointer"   onClick="getPage3('3')" ><span id="st">선생님로그인</span></div> 
+					<div id="pointer2"  onClick="getPage3('4')" ><span id="pa">관리자로그인</span></div>
 				</div>
 
 			<div id="banner">

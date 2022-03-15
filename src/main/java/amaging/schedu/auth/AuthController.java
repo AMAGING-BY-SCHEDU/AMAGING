@@ -1,6 +1,7 @@
 package amaging.schedu.auth;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,26 +12,28 @@ import amaging.schedu.bean.UserInfo;
 
 @Controller
 public class AuthController {
-
-	private Authentication auth;
-	@PostMapping("/Login")
-	public ModelAndView login(ModelAndView mav, @ModelAttribute Login lg) {
-				
-		return mav;
-	}
-	@PostMapping("/Logout")
-	public ModelAndView logout(ModelAndView mav, @ModelAttribute Login lg) {
-				
-		return mav;
-	}
-	@PostMapping("/Join")
-	public ModelAndView join(ModelAndView mav, @ModelAttribute RegMember rm) {
-				
-		return mav;
-	}
-	@PostMapping("/GetChildList")
-	public ModelAndView getChildList(ModelAndView mav, @ModelAttribute UserInfo uf) {
-				
-		return mav;
-	}
+   @Autowired
+   private Authentication auth;
+   
+   @PostMapping("/Login")
+   public ModelAndView login(ModelAndView mav, @ModelAttribute Login lg) {
+      auth.backController(2,mav.addObject("login", lg));
+      System.out.println(mav.getViewName());
+      return mav;
+   }
+   @PostMapping("/Logout")
+   public ModelAndView logout(ModelAndView mav, @ModelAttribute Login lg) {
+            
+      return mav;
+   }
+   @PostMapping("/Join")
+   public ModelAndView join(ModelAndView mav, @ModelAttribute RegMember rm) {
+            
+      return mav;
+   }
+   @PostMapping("/GetChildList")
+   public ModelAndView getChildList(ModelAndView mav, @ModelAttribute UserInfo uf) {
+            
+      return mav;
+   }
 }

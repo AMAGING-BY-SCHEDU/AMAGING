@@ -9,4 +9,6 @@ public class GradeBean {
 	int score;
 	String sName;
 	String date;
+	int rank;
+	int headCount;
 }

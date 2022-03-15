@@ -3,4 +3,31 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="amaging.schedu.db.GFOracleMapper">
+	
+	<select id="getTeacherAcademy" parameterType ="amaging.schedu.bean.AcList" resultType="amaging.schedu.bean.ACPlan">
+		SELECT AC.AC_CODE AS ACCODE, AC.AC_NAME AS ACNAME FROM TA INNER JOIN TC ON TC.TC_CODE = TA.TA_TCCODE 
+											INNER JOIN AC ON TA.TA_ACCODE = AC.AC_CODE 
+		WHERE TC.TC_CODE = #{teacherId}
+	</select>
+	
+	<select id="checkPwd" parameterType ="amaging.schedu.bean.AcList" resultType="int">
+		SELECT COUNT(*) FROM TA WHERE TA.TA_ACCODE = #{acCode} AND TA.TA_TCCODE = #{teacherId} AND TA.TA_PASSWORD = #{password}
+	</select>
+	
+	<select id="getTeacherClass" parameterType ="amaging.schedu.bean.AcList" resultType="amaging.schedu.bean.Subject">
+		SELECT SB.SB_CLCRCODE AS CLCODE,CL.CL_NAME AS CLNAME 
+		FROM SB INNER JOIN CL ON SB.SB_CLCRCODE = CL.CL_CRCODE 
+		WHERE SB.SB_CLCRACCODE = #{acCode} AND SB.SB_TCCODE = #{teacherId}
+	</select>
+	
+	<select id="getTGrade" parameterType ="amaging.schedu.bean.Subject" resultType="amaging.schedu.bean.GradeBean">
+		SELECT SB.SB_ASCODE AS SUBJECTCODE, SB.SB_ASNAME AS SUBJECTNAME, GR.GR_STCODE AS STUDENTID, ST.ST_NAME AS SNAME, GR.GR_SCORE AS SCORE, GR.GR_RANK AS RANK, (SELECT COUNT(*) FROM SB WHERE SB.SB_CLCRCODE = #{clCode}) AS HEADCOUNT 
+		FROM GR INNER JOIN SB ON GR.GR_SBACODE = SB.SB_ACODE 
+       			INNER JOIN ST ON ST.ST_CODE = GR.GR_STCODE 
+        		INNER JOIN BS ON SB.SB_CLCODE = BS.BS_CLCODE 
+		WHERE SB.SB_TCCODE = #{teacherId} AND SB.SB_CLCRACCODE = #{acCode} AND SB.SB_CLCRCODE = #{clCode} 
+        GROUP BY SB.SB_ASCODE, SB.SB_ASNAME, GR.GR_STCODE, ST.ST_NAME, 
+				 GR.GR_SCORE, GR.GR_RANK
+	</select>
+	
 </mapper>

@@ -8,6 +8,45 @@
  <script src="resources/js/common.js"></script>
 
 </head>
+<script>
+
+function authentication(userCode){
+   const f = document.getElementsByName("login")[0];
+   const hidden = makeInputElement("hidden","userCode",userCode,"");
+  
+   const userData = [document.getElementsByName("email")[0],
+   document.getElementsByName("password")[0]];
+   
+   const message = [ "email 입력해 주세요!", "퍠쓰워드 입력해 주세요"];
+   for (let index = 0; index < userData.length; index++) {
+      if (!isEmpty(userData[index])) {
+         alert(message[index]);
+         return;
+      } 
+   
+   }
+   f.appendChild(hidden);
+   f.submit();
+}
+function isEmpty(obj){
+   let check = true;
+   if(obj.value == ""){
+      check = false;
+   }
+   return check;
+}
+
+function makeInputElement(type, name, value, placeholder){
+    const input = document.createElement("input");
+    input.setAttribute("type", type);
+    input.setAttribute("name", name);
+    if(value != ""){input.setAttribute("value", value);}
+    if(placeholder != ""){input.setAttribute("placeholder", placeholder);}
+    
+    return input;
+ }
+
+</script>
 <style>
 
 
@@ -65,7 +104,7 @@
 #pabox{ width:90%; height:75%;  position:fixed;   }
 </style>
 <body class ="background">
-<form name ="login" action="" method="post">
+<form name ="login" action="/Login" method="post">
 <div id="basic">
 <div id="body">
 	<div id="logo"></div>
@@ -73,15 +112,15 @@
 		<div id="welcome">학생 로그인</div>
 		<div id="pabox">
 			<div>
-				<input class = "inputE" type="text" name="" placeholder="Email 입력 "/>
+				<input class = "inputE" type="text" name="email" placeholder="Email 입력 "/>
 			</div>
 			<div>
-				<input class = "inputP" type="password" name="" placeholder=" PASSWORD"/>
+				<input class = "inputP" type="password" name="password" placeholder=" PASSWORD"/>
 			</div>
 		</div>
 		<div>
  			<div>
-				<input type="button" id="loginbtn" value="LOGIN" onClick=""/>
+				<input type="button" id="loginbtn" value="LOGIN" onClick="authentication('2')"/>
 			</div>
 		</div>
    
