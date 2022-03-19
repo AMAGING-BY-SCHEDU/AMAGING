@@ -23,12 +23,10 @@ function makeInputElement(type, name, value, placeholder){
 	return input;
 }
 function getAjaxData(action,data,fn,method){
-	alert(data + "??");
 	const ajax = new XMLHttpRequest();
 		ajax.onreadystatechange = function() {
 			if ( ajax.readyState== 4 && ajax.status == 200) {
-				alert(ajax.responseText);
-				window[fn](JSON.parse(ajax.responseText));						
+				window[fn](ajax.responseText);						
 			}
 		};
 		if(method=="get"){

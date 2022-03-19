@@ -15,19 +15,52 @@
 	</select>
 	
 	<select id="getTeacherClass" parameterType ="amaging.schedu.bean.AcList" resultType="amaging.schedu.bean.Subject">
-		SELECT SB.SB_CLCRCODE AS CLCODE,CL.CL_NAME AS CLNAME 
-		FROM SB INNER JOIN CL ON SB.SB_CLCRCODE = CL.CL_CRCODE 
-		WHERE SB.SB_CLCRACCODE = #{acCode} AND SB.SB_TCCODE = #{teacherId}
+		SELECT SB.SB_CLCODE AS CLCODE,CL.CL_NAME AS CLNAME 
+		FROM SB INNER JOIN CL ON SB.SB_CLCODE = CL.CL_CODE 
+		WHERE CL.CL_CRACCODE = #{acCode} AND SB.SB_TCCODE = #{teacherId}
 	</select>
 	
 	<select id="getTGrade" parameterType ="amaging.schedu.bean.Subject" resultType="amaging.schedu.bean.GradeBean">
-		SELECT SB.SB_ASCODE AS SUBJECTCODE, SB.SB_ASNAME AS SUBJECTNAME, GR.GR_STCODE AS STUDENTID, ST.ST_NAME AS SNAME, GR.GR_SCORE AS SCORE, GR.GR_RANK AS RANK, (SELECT COUNT(*) FROM SB WHERE SB.SB_CLCRCODE = #{clCode}) AS HEADCOUNT 
+		SELECT GR.GR_SBACODE AS SBACODE, SB.SB_ASCODE AS SUBJECTCODE, SB.SB_ASNAME AS SUBJECTNAME, GR.GR_STCODE AS STUDENTID, ST.ST_NAME AS SNAME, GR.GR_SCORE AS SCORE, GR.GR_RANK AS RANK, (SELECT COUNT(*) FROM BS WHERE BS_CLCRACCODE = #{acCode} AND BS.BS_CLCODE = #{clCode}) AS HEADCOUNT 
 		FROM GR INNER JOIN SB ON GR.GR_SBACODE = SB.SB_ACODE 
        			INNER JOIN ST ON ST.ST_CODE = GR.GR_STCODE 
         		INNER JOIN BS ON SB.SB_CLCODE = BS.BS_CLCODE 
-		WHERE SB.SB_TCCODE = #{teacherId} AND SB.SB_CLCRACCODE = #{acCode} AND SB.SB_CLCRCODE = #{clCode} 
-        GROUP BY SB.SB_ASCODE, SB.SB_ASNAME, GR.GR_STCODE, ST.ST_NAME, 
-				 GR.GR_SCORE, GR.GR_RANK
+		WHERE SB.SB_TCCODE = #{teacherId} AND SB.SB_CLCRACCODE = #{acCode} AND SB.SB_CLCODE = #{clCode} 
+		GROUP BY GR.GR_SBACODE, SB.SB_ASCODE, SB.SB_ASNAME, GR.GR_STCODE, ST.ST_NAME, 
+       			 GR.GR_SCORE, GR.GR_RANK
 	</select>
 	
+	<update id="modGrade" parameterType = "amaging.schedu.bean.GradeBean">
+		UPDATE GR SET GR.GR_SCORE = #{score}, GR.GR_RANK = #{rank} WHERE GR.GR_SBACODE = #{sBACode} and GR.GR_STCODE = #{studentId}
+	</update>
+	
+	<select id="getStudentList" parameterType ="amaging.schedu.bean.Subject" resultType="amaging.schedu.bean.GradeBean">
+		SELECT SB.SB_ACODE AS SBACODE, SB.SB_ASNAME AS SUBJECTNAME,BS.BS_STCODE AS STUDENTID , ST.ST_NAME AS SNAME FROM BS 
+		INNER JOIN ST ON BS.BS_STCODE = ST.ST_CODE 
+        INNER JOIN SB ON BS.BS_CLCRACCODE = SB.SB_CLCRACCODE 
+                     AND BS.BS_CLCRCODE = SB.SB_CLCRCODE 
+                     AND BS.BS_CLCODE = SB.SB_CLCODE 
+		WHERE BS_CLCRACCODE = #{acCode} AND BS_CLCODE = #{clCode} AND SB.SB_TCCODE = #{teacherId}
+	</select>
+	
+	<insert id="regGrade" parameterType = "amaging.schedu.bean.GradeBean">
+		INSERT INTO GR(GR_SBACODE,GR_STCODE,GR_SCORE,GR_RANK) 
+		VALUES(#{sBACode},#{studentId},#{score},#{rank})
+	</insert>
+	
+	<select id="getGrade" parameterType ="amaging.schedu.bean.UserInfo" resultType="amaging.schedu.bean.GradeBean">
+		SELECT AC.AC_NAME AS ACNAME, CL.CL_NAME AS CLNAME, SB.SB_ASNAME AS SUBJECTNAME, GR.GR_SCORE AS SCORE, GR.GR_RANK AS RANK ,(SELECT COUNT(*) FROM BS WHERE BS.BS_CLCRACCODE =(SELECT BS.BS_CLCRACCODE FROM BS WHERE BS.BS_STCODE =  #{userId}) 
+                         			AND BS.BS_CLCRCODE = (SELECT BS.BS_CLCRCODE FROM BS WHERE BS.BS_STCODE =  #{userId}) 
+                         			AND BS.BS_CLCODE = (SELECT BS.BS_CLCODE FROM BS WHERE BS.BS_STCODE =  #{userId})) AS HEADCOUNT 
+		FROM GR INNER JOIN AC ON SUBSTR(GR.GR_SBACODE,6,10) = AC.AC_CODE 
+        		INNER JOIN CL ON SUBSTR(GR.GR_SBACODE,21,5) = CL.CL_CODE 
+       			INNER JOIN SB ON SUBSTR(GR.GR_SBACODE,0,5) = SB.SB_ASCODE 
+		WHERE GR.GR_STCODE = #{userId} 
+		GROUP BY CL.CL_NAME, AC.AC_NAME, SB.SB_ASNAME, GR.GR_SCORE, GR.GR_RANK
+	</select>
+	
+	<select id="getMyChilds" parameterType ="amaging.schedu.bean.UserInfo" resultType="amaging.schedu.bean.GradeBean">
+		SELECT SP.SP_STCODE AS STUDENTID ,ST.ST_NAME AS SNAME FROM SP INNER JOIN ST ON SP.SP_STCODE = ST.ST_CODE 
+		WHERE SP.SP_PRCODE = #{userId}
+	</select>
 </mapper>

@@ -18,7 +18,7 @@ public class AuthController {
    @PostMapping("/Login")
    public ModelAndView login(ModelAndView mav, @ModelAttribute Login lg) {
       auth.backController(2,mav.addObject("login", lg));
-      System.out.println(mav.getViewName());
+      System.out.println("Action /Login 진입");
       return mav;
    }
    @PostMapping("/Logout")

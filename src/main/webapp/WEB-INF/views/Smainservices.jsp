@@ -217,30 +217,28 @@ position:absolute; left:45%; top:1%;
 
 </head>
 <body onload="">
-	<form name="" action="file:///C:/" method="get">
+	<form name="sMain" action="file:///C:/" method="post">
 		<div id="basic">
 			<div id="frame">
 				<div id="logo"></div>
 				 <div id="sessionBox"><span id="session">${sessionInfo.userName}님 환영합니다.
-				 	<input	type="hidden" value='${sessionInfo.userId}' id="userId" />
-					<input	type="hidden" value='${sessionInfo.userCode}' id="userCode" />
+				 	<input	type="hidden" value='${sessionInfo.userId}' name="userId" />
+					<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
 			    </span></div>
 				<div id="logOut">
-					<input type="button" id="btn" value="로그아웃" onclick=""
-						onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
+					<input type="button" id="btn" value="로그아웃" onclick="accessOut()"	onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
 				</div>
 			</div>
 
 			<div id="body">
 				<div id="colorline"></div>
 				<div class="servicebutton">
-					<input type="button" class="bothB" id="oneB" onclick=""> <input
-						type="button" class="bothB" id="twoB" onclick=""> <input
-						type="button" class="bothB" id="threeB" onclick=""> <input
-						type="button" class="bothB" id="fourB" onclick=""> <input
-						type="button" class="bothB" id="fiveB" onclick="">
-						<input
-						type="button" class="bothB" id="sixB" onclick="">
+					<input type="button" class="bothB" id="oneB" onclick=""> 
+					<input type="button" class="bothB" id="twoB" onclick="getPage('sMain','GradePage')"> 
+					<input type="button" class="bothB" id="threeB" onclick=""> 
+					<input type="button" class="bothB" id="fourB" onclick=""> 
+					<input type="button" class="bothB" id="fiveB" onclick="">
+					<input type="button" class="bothB" id="sixB" onclick="">
 				</div>
 				<div id="mainpage"></div>
 			</div>

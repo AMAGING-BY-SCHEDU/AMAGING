@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>선생님 성적 페이지</title>
  <script src="resources/js/common.js"></script>
- <script src="resources/js/tGradePage.js"></script>
+ <script src="resources/js/gradePage.js"></script>
 
  
  
@@ -273,17 +273,17 @@ position:absolute; left:45%; top:1%;
 </style>
 
 </head>
-<body onload="myAcademyList('${sessionInfo.userId}')">
+<body onload="myAcademyList('${sessionInfo.userId}','get')">
 
 
 
-   <form name="" action="file:///C:/" method="get">
-      <div id="basic">
+   <form name="tMain" action="file:///C:/" method="get">
+      <div id="basic" >
          <div id="frame">
             <div id="logo"></div>
              <div id="sessionBox"><span id="session">${sessionInfo.userName}님 환영합니다.</span>
              					  <input id = "userId" type = "hidden" value = '${sessionInfo.userId}'/>
-             					  <input id = "acCode" type = "hidden" value = '${sessionInfo.acCode}'/>
+             					  <input id = "acCode" type = "hidden" value = ''/>
              					  <span id="acCode" hidden="hidden">""</span>
              </div>
             <div id="logOut">
@@ -295,15 +295,15 @@ position:absolute; left:45%; top:1%;
             <div id="colorline"></div>
                <div class="servicebutton">
                   <input type="button" class="bothB" id="oneB" onclick=""> 
-                  <input type="button" class="bothB" id="twoB" onclick="">
+                  <input type="button" class="bothB" id="twoB" onclick="getPage('tMain','TGradePage')">
                   <div class="div1">
-                    <div class="div2" onclick="myAcademyList('${sessionInfo.userId}')" >
+                    <div id ="gradeFirst" class="div2" onclick="myAcademyList('${sessionInfo.userId}','get')" >
                    ●&nbsp;&nbsp;성적조회
                      </div>
-                    <div class="div2" onclick="myAcademyList('${sessionInfo.userId}')" >
+                    <div class="div2" id ="gradeSecond" onclick="myAcademyList('${sessionInfo.userId}','reg')" >
                  ●&nbsp;&nbsp;성적등록
                       </div>
-                 <div class="div2" onclick="myAcademyList('${sessionInfo.userId}')" >
+                 <div class="div2" id ="gradeThird" onclick="myAcademyList('${sessionInfo.userId}','mod')" >
                  ●&nbsp;&nbsp;성적수정
                       </div>
                      </div> 
@@ -313,7 +313,7 @@ position:absolute; left:45%; top:1%;
                    <input type="button" class="bothB" id="sixB" onclick="">
                     
                </div>
-            <div id="mainpage"></div>
+            <div id="mainpage" style = "overflow : auto"></div>
          </div>
       </div>
       

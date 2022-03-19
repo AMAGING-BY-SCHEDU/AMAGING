@@ -55,7 +55,6 @@ public class MovePageController {
 	
 	@RequestMapping(value = "/LoginPage", method = RequestMethod.GET)
 	   public String moveLoginPage(Model model, @ModelAttribute Login lg) {
-	      System.out.println("여기");
 	      String page=null;
 	      if(lg.getUserCode() == 3) {
 	         /*선생님로그인페이지*/
@@ -108,14 +107,15 @@ public class MovePageController {
 		fee.backController(0, mav);
 		return mav;
 	}
-	@GetMapping("/TGradePage")
+	@PostMapping("/TGradePage")
 	public ModelAndView tGradePage(ModelAndView mav, @ModelAttribute UserInfo uf) {
 		grade.backController(1, mav);
 		return mav;
 	}
 	@PostMapping("/GradePage")
 	public ModelAndView gradePage(ModelAndView mav, @ModelAttribute UserInfo uf) {
-		grade.backController(0, mav);
+		mav.addObject("uf",uf);
+		grade.backController(9, mav);
 		return mav;
 	}
 	@PostMapping("/GetArticleForm")

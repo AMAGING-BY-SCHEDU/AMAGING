@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>학부모 성적 페이지</title>
  <script src="resources/js/common.js"></script>
+ <script src="resources/js/gradePage.js"></script>
 <style>
 #frame {width:100%; height:100%;
    position:absolute; top:5%;}
@@ -224,15 +225,21 @@ text-align:center;
 #sessionBox{ width:30%; height:10%; 
 position:absolute; left:45%; top:1%;
 }
+
 </style>
 
 </head>
-<body onload="">
-   <form name="" action="" method="get">
+<body onload="MyChildList()">
+   <form name="pmainservice" action="" method="post">
       <div id="basic">
          <div id="frame">
             <div id="logo"></div>
-             <div id="sessionBox"><span id="session">정재영 부모김현우님 환영합니다.</span></div>
+             <div id="sessionBox"><span id="session"><span id='childName'></span>${sessionInfo.userName}님 환영합니다.
+             	<input	type="hidden" value='${sessionInfo.userId}' name="userId" />
+				<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
+				<input	type="hidden" value="" name="sEmail" id ="sEmail" />
+				<input	type="hidden" value="" name="sCode" id ="sCode" />
+			</span></div>
             <div id="logOut">
                <input type="button" id="btn" value="로그아웃" onclick="" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
             </div>
@@ -242,7 +249,7 @@ position:absolute; left:45%; top:1%;
             <div id="colorline"></div>
                <div class="servicebutton">
                   <input type="button" class="bothB" id="oneB" onclick=""> 
-                  <input type="button" class="bothB" id="twoB" onclick=""> 
+                  <input type="button" class="bothB" id="twoB" onclick="getPage('pmainservice','GradePage')"> 
                   <input type="button" class="bothB" id="threeB" onclick=""> 
                   <input type="button" class="bothB" id="fourB" onclick="">
                    <input type="button" class="bothB" id="fiveB" onclick=""> 
@@ -271,4 +278,5 @@ position:absolute; left:45%; top:1%;
 
    }
 </script>
-</body></html>
+</body>
+</html>

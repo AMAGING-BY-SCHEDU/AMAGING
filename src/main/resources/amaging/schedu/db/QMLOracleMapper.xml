@@ -26,6 +26,15 @@
 		INSERT INTO AAH(AAH_ADACCODE, AAH_ADCODE, AAH_TIME, AAH_COCODE) 
 		VALUES(#{acCode},#{userId}, DEFAULT,15)
 	</insert>
+    <insert id="setAccessOutHistory" parameterType="amaging.schedu.bean.UserInfo">
+		INSERT INTO AH(AH_USERID, AH_TIME, AH_USERCODE, AH_COCODE) 
+		VALUES(#{userId}, DEFAULT, #{userCode},16)
+	</insert>
+    <insert id="setAdminAccessOutHistory" parameterType="amaging.schedu.bean.UserInfo">
+		INSERT INTO AAH(AAH_ADACCODE, AAH_ADCODE, AAH_TIME, AAH_COCODE) 
+		VALUES(#{acCode},#{userId}, DEFAULT,16)
+	</insert>
+     
         
     <!-- 세션정보 -->
     <select id="getTeacherInfo" parameterType="amaging.schedu.bean.Login" resultType="amaging.schedu.bean.UserInfo">
@@ -33,17 +42,39 @@
 		ACCESSTIME=(SELECT MAX(ACCESSTIME)FROM SCHEDUDBA.TEACHERACCESSINFO WHERE EMAIL=#{email})  
 	</select>
 	<select id="getParentInfo" parameterType="amaging.schedu.bean.Login" resultType="amaging.schedu.bean.UserInfo">
-		SELECT USERID, USERNAME, USERCODE FROM SCHEDUDBA.PARENTSACCESSINFO WHERE USERID=#{email} AND
-		ACCESSTIME=(SELECT MAX(ACCESSTIME)FROM SCHEDUDBA.PARENTSACCESSINFO WHERE EMAIL=#{email}) 
+		SELECT USERID, USERNAME, 1 AS USERCODE, STNAME FROM SCHEDUDBA.PARENTSACCESSINFO WHERE EMAIL=#{email}AND 
+		STNAME=(SELECT MAX(STNAME)FROM SCHEDUDBA.PARENTSACCESSINFO WHERE EMAIL=#{email})
 	</select>
 	<select id="getStudentInfo" parameterType="amaging.schedu.bean.Login" resultType="amaging.schedu.bean.UserInfo">
-		SELECT USERID, USERNAME, USERCODE FROM SCHEDUDBA.STUDENTACCESSINFO WHERE EMAIL=#{email} AND 
-		ACCESSTIME=(SELECT MAX(ACCESSTIME)FROM SCHEDUDBA.STUDENTACCESSINFO WHERE EMAIL=#{email}) 
+		SELECT ST_CODE AS USERID, ST_NAME AS USERNAME, 2 AS USERCODE FROM ST WHERE ST_EMAIL=#{email}
 	</select>
 	<select id="getAdminInfo" parameterType="amaging.schedu.bean.Login" resultType="amaging.schedu.bean.UserInfo">
-		SELECT ACCODE, USERID, USERNAME, TIER FROM SCHEDUDBA.ADMINISTERACCESSINFO WHERE USERID=#{adCode} AND
+		SELECT ACCODE, ADCODE AS USERID, USERNAME, 4 AS USERCODE, TIER FROM SCHEDUDBA.ADMINISTERACCESSINFO WHERE USERID=#{adCode} AND
 		ACCESSTIME=(SELECT MAX(ACCESSTIME)FROM SCHEDUDBA.ADMINISTERACCESSINFO WHERE USERID=#{adCode})
 	</select>
 	
+	<!-- 회원등록 -->
+	<insert id="setParentsData" parameterType="amaging.schedu.bean.RegMember">
+		INSERT INTO PR(PR_CODE, PR_NAME, PR_EMAIL, PR_PASSWORD) 
+		VALUES('P'||(SELECT SUBSTR(MAX(PR_CODE),2,5)+1 FROM PR),#{userName},#{email},#{password})
+	</insert>
+	<insert id="setStudentData" parameterType="amaging.schedu.bean.RegMember">
+		INSERT INTO ST(ST_CODE, ST_NAME, ST_EMAIL, ST_PASSWORD) 
+		VALUES('S'||(SELECT SUBSTR(MAX(ST_CODE),2,5)+1 FROM ST),#{userName},#{email},#{password})
+	</insert>
+	<insert id="setTeacherData" parameterType="amaging.schedu.bean.RegMember">
+		INSERT INTO TC(TC_CODE, TC_EMAIL,TC_NAME,TC_PASSWORD)
+		VALUES('T'||(SELECT SUBSTR(MAX(TC_CODE),2,5)+1 FROM TC),#{userName},#{email},#{password})
+	</insert>
 	
+	<!-- 자녀리스트 -->
+	<select id="displayChildList" parameterType="amaging.schedu.bean.ChildCode" resultType="amaging.schedu.bean.ChildCode">
+		SELECT 	STCODE AS USERID, SNAME, SEMAIL FROM SCHEDUDBA.CHILDLIST WHERE PRCODE = #{userId}
+	</select>
+	
+	<!-- 학사일정 -->
+	<select id="getAcList" parameterType="amaging.schedu.bean.ACPlan" resultType="amaging.schedu.bean.ACPlan">
+		SELECT SA_ACCODE AS ACCODE, #{sDate} AS SDATE FROM SA WHERE SA_STCODE = #{userId}
+	</select>
+		
 </mapper>

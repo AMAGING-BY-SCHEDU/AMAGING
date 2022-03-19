@@ -53,6 +53,7 @@ public class Authentication extends amaging.schedu.common.CommonMethod{
             mav.addObject("accessInfo", uf);
             page = "Tmainservices";
          }else if(lg.getUserCode() == 1&&this.convertToBoolean(om.isParentsEmail(lg))){
+        	System.out.println("Authentication Controller userCode = 1 진입");
             uf=om.getParentInfo(lg);
             this.om.setAccessHistory(uf);
             mav.addObject("accessInfo", om.getParentInfo(lg));

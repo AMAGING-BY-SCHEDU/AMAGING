@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>관리자 메인 페이지</title>
  <script src="resources/js/common.js"></script>
+
 <style>
 #frame {
    width: 100%;
@@ -218,12 +219,13 @@ position:absolute; left:45%; top:1%;
 
             <span id="logo"></span>
             <div id="sessionBox"><span id="session">${sessionInfo.userName}님 환영합니다.
-            	<input	type="hidden" value='${sessionInfo.userId}' id="userId" />
-				<input	type="hidden" value='${sessionInfo.userCode}' id="userCode" />
-				<input	type="hidden" value='${sessionInfo.acCode}' id="acCode" />                         
+            	<input	type="hidden" value='${sessionInfo.userId}' name="userId" />
+				<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
+				<input	type="hidden" value='${sessionInfo.acCode}' name="acCode" />
+				<input	type="hidden" value='${sessionInfo.tier}' name="tier" />                         
             </span></div>
             <div id="logOut">
-               <span><input type="button" id="btn" value="로그아웃" onclick=""
+               <span><input type="button" id="btn" value="로그아웃" onclick="accessAdminOut()"
                   onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)"></span>
             </div>
          </div>
