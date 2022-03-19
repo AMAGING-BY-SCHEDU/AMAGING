@@ -211,17 +211,21 @@ text-align:center;
 #sessionBox{ width:30%; height:10%; 
 position:absolute; left:45%; top:1%;
 }
+
 </style>
 
 </head>
-<body onload="">
-   <form name="" action="file:///C:/" method="get">
+<body>
+   <form name="tMainService" action="/TAttendancePage" method="POST">
       <div id="basic">
          <div id="frame">
             <div id="logo"></div>
-             <div id="sessionBox"><span id="session">김현우님 환영합니다.</span></div>
+             <div id="sessionBox"><span id="session">${sessionInfo.userName}님 환영합니다.
+             	<input	type="hidden" value='${sessionInfo.userId}' name="userId" />
+				<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
+            </span></div>
             <div id="logOut">
-               <input type="button" id="btn" value="로그아웃" onclick="" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
+               <input type="button" id="btn" value="로그아웃" onclick="accessOut();" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
             </div>
          </div>
          
@@ -230,7 +234,7 @@ position:absolute; left:45%; top:1%;
                <div class="servicebutton">
                   <input type="button" class="bothB" id="oneB" onclick=""> 
                   <input type="button" class="bothB" id="twoB" onclick=""> 
-                  <input type="button" class="bothB" id="threeB" onclick=""> 
+                  <input type="button" class="bothB" id="threeB" onclick="getNextPage()" /> 
                   <input type="button" class="bothB" id="fourB" onclick="">
                    <input type="button" class="bothB" id="fiveB" onclick="">
                    <input type="button" class="bothB" id="sixB" onclick="">  
@@ -239,9 +243,16 @@ position:absolute; left:45%; top:1%;
             <div id="mainpage"></div>
          </div>
       </div>
-   </form>
-
+	</form>
+</body>
 <script>
+function getNextPage(data) {
+	const f = document.getElementsByName("tMainService")[0];
+	const email = makeInputElement("hidden","email",data,"");
+	f.appendChild(email);
+	document.getElementsByName("email")[0];
+	f.submit();
+}
    function mouseOver(obj) {
       let fColor = (obj.id == "btn") ? "#000000" : "#FFFFFF";
       obj.style.color = fColor;
@@ -258,4 +269,4 @@ position:absolute; left:45%; top:1%;
 
    }
 </script>
-</body></html>
+</html>

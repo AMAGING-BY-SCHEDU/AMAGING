@@ -5,5 +5,5 @@ public class TList {
 	String acCode;
 	String teacherId;
 	String tName;
-	String tEmail;
+	String email;
 }

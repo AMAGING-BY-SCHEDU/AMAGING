@@ -3,6 +3,7 @@ package amaging.schedu.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import amaging.schedu.attendance.Attendance;
+import amaging.schedu.bean.Login;
+import amaging.schedu.auth.Authentication;
 import amaging.schedu.bean.UserInfo;
 import amaging.schedu.calender.Calender;
 import amaging.schedu.fee.Fee;
@@ -23,6 +26,8 @@ import amaging.schedu.timeTable.TimeTable;
 
 @Controller
 public class MovePageController {
+	@Autowired
+	private Authentication auth;
 	@Autowired
 	private Calender cal;
 	@Autowired
@@ -51,17 +56,29 @@ public class MovePageController {
 	}
 	
 	@RequestMapping(value = "/LoginPage", method = RequestMethod.GET)
-	public String moveLoginPage() {
-		String page=null;
+	public String moveLoginPage(ModelAndView mav, @ModelAttribute Login lg) {
+		String page = null;
+		if (lg.getUserCode() == 3) {
+			page = "tLoginPage";
+		} else if (lg.getUserCode() == 2) {
+			page = "sLoginPage";
+		} else if (lg.getUserCode() == 4) {
+			page = "aLoginPage";
+		} else {
+			page = "pLoginPage";
+		}
 		return page;
 	}
-	@GetMapping("/JoinPage")
-	public String studentJoinpage() {
+
+	@RequestMapping(value = "/JoinPage", method = RequestMethod.GET)
+	public String studentParentJoinpage(ModelAndView mav, @ModelAttribute Login lg) {
+		auth.backController(6, mav.addObject("login", lg));
 		return "join";
 	}
+
 	@PostMapping("/AcPlanPage")
 	public ModelAndView acPlanPage(ModelAndView mav, @ModelAttribute UserInfo uf) {
-		cal.backController(1, mav);
+		cal.backController(1, mav.addObject("uf", uf));
 		return mav;
 	}
 	@PostMapping("/PSClassPage")
@@ -132,6 +149,11 @@ public class MovePageController {
 	@PostMapping("/AQnAPage")
 	public ModelAndView aQnAPage(ModelAndView mav, @ModelAttribute UserInfo uf) {
 		qna.backController(0, mav);
+		return mav;
+	}
+	@PostMapping("/TAttendancePage")
+	public ModelAndView TAPage(ModelAndView mav, @ModelAttribute UserInfo uf) {
+		ad.backController(1, mav.addObject("uf",uf));
 		return mav;
 	}
 }

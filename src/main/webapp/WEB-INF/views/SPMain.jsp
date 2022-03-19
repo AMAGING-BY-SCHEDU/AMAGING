@@ -7,11 +7,24 @@
 <title>SPMain</title>
 <script src=""></script>
 <script>
-	function test() {
-		let form = document.getElementById("damnnn");
-		let damn = document.getElementById("damn");
-		form.appendChild(damn);
-		form.submit();
+	/*브라우저 67%로 설정하기*/
+	
+	function getPage(userCode) {
+		const f = document.getElementsByName("SPpage")[0];
+		const hidden = makeInputElement("hidden","userCode",userCode,"");
+		f.appendChild(hidden);
+		document.getElementsByName("userCode")[0];
+		f.submit();
+	}
+	
+	function makeInputElement(type, name, value, placeholder){
+		const input = document.createElement("input");
+		input.setAttribute("type", type);
+		input.setAttribute("name", name);
+		if(value != ""){input.setAttribute("value", value);}
+		if(placeholder != ""){input.setAttribute("placeholder", placeholder);}
+		
+		return input;
 	}
 	
 	function ajax() {
@@ -156,7 +169,6 @@
 
 
 .box {
-	text-align: center;
 	line-height: 100px;
 	font-size: 100px;
 	color: #fff;
@@ -171,8 +183,8 @@
 	
 
 }
-#banner{ position:absolute; left:50.5%; top:46%;
-	width:100%; height:100%;}
+#banner	{position:absolute; left:50.6%; top:43.8%;
+		width:100%; height:100%;}
 #slider2{margin-top:16%;}
 #slider1{position:fixed; top:76.2%; width:30%;right:49.6%; }
 
@@ -188,7 +200,7 @@ h1{color:#A6A6A6; font-size:30%; position:absolute; left:34%; top:36%; }
 
 </head>
 <body onLoad="">
-	<form name="" action="/" method="get">
+	<form name="SPpage" action="/LoginPage" method="get">
 		<div id="basic">
 			<div id="body">
 				<div id="logo"></div>
@@ -197,8 +209,8 @@ h1{color:#A6A6A6; font-size:30%; position:absolute; left:34%; top:36%; }
 				<div id="subphoto"></div>
 			    </div>
 				<div id="loginMom">
-					<div id="pointer"  onClick="" ><span id="st"> 학생로그인</span></div> 
-					<div  id="pointer2"  onClick=""><span id="pa">학부모로그인</span></div>
+					<div id="pointer"  onClick="getPage('1');" ><span id="st"> 학생로그인</span></div> 
+					<div id="pointer2"  onClick="getPage('2')"><span id="pa">학부모로그인</span></div>
 				</div>
 
 			<div id="banner">

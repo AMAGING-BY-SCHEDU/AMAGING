@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>선생님 로그인</title>
-
+<script src="resources/js/common.js"></script>
+<script src="resources/js/login.js"></script>
 </head>
+
 <style>
 
 
@@ -41,7 +43,7 @@
 		   line-height: 1%;width:22%;
            font-size:150%;text-align:center;
            box-shadow : 5px 5px 5px black; transition-duration:0.3s;
-           position:absolute; top:23%; left: 65%;cursor: pointer;
+           position:absolute; top:19%; left: 65%;cursor: pointer;
            border-radius:8px;}
            
 #loginbtn:active {background-color: #0042ED; color:#FFFFFF; height: 48%;
@@ -63,8 +65,9 @@
 			margin-top:31.6%;}		   
 #pabox{ width:90%; height:75%;  position:fixed;   }
 </style>
-<body class ="background">
-<form name ="login" action="" method="post">
+<body class ="background" onLoad = "sendMessage('${msg}')">
+<form name ="login" action="/Login" method="post">
+<input	type="hidden" value='3' name="userCode" />
 <div id="basic">
 <div id="body">
 	<div id="logo"></div>
@@ -72,21 +75,21 @@
 		<div id="welcome">선생님 로그인</div>
 		<div id="pabox">
 			<div>
-				<input class = "inputE" type="text" name="" placeholder="Email 입력 "/>
+				<input class = "inputE" type="text" name="email" placeholder="Email 입력 "/>
 			</div>
 			<div>
-				<input class = "inputP" type="password" name="" placeholder=" PASSWORD"/>
+				<input class = "inputP" type="password" name="password" placeholder=" PASSWORD"/>
 			</div>
 		</div>
 		<div>
  			<div>
-				<input type="button" id="loginbtn" value="LOGIN" onClick=""/>
+				<input type="button" id="loginbtn" value="LOGIN" onClick="authentication();"/>
 			</div>
 		</div>
    
 		<div id="bottombox">
 			<div id="findPassword"  onClick="">비밀번호 찾기 </div>
-      		<div id="join" onClick="">회원가입</div>
+      		<div id="join" onClick="getJoinPage(3);">회원가입</div>
 		</div>
 	</div>
 </div>

@@ -6,9 +6,12 @@ import lombok.Data;
 public class UserInfo {
 	String userId;
 	String userName;
-	String userCode;
+	int userCode;
 	String acCode;
 	String studentId;
 	String tier;
+	String email;
+	String adCode;
+	String USERCODE;
 	
 }

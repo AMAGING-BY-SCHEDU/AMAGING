@@ -7,11 +7,20 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="amagingDBCP" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@schedu-amaging.crzchh9rdnjg.ap-northeast-2.rds.amazonaws.com:1521:ORCL"></property>
+		<property name="username" value="JH11"></property>
+		<property name="password" value="1234"></property>  -->
 		
-		 <property name="jdbcUrl" value="jdbc:oracle:thin:@schedu-amaging.crzchh9rdnjg.ap-northeast-2.rds.amazonaws.com:1521:ORCL"></property>
-		<property name="username" value="amaging11"></property>
-		<property name="password" value="amaging11"></property>	
+		<!-- <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@106.243.194.229:9999:xe"></property>
+		<property name="username" value="JH11"></property>
+		<property name="password" value="1234"></property> -->
+		
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.0.171:1521:xe"></property>
+		<property name="username" value="JH11"></property>
+		<property name="password" value="1234"></property>
 	</bean>
 	<bean id="ds" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="amagingDBCP"></constructor-arg>
