@@ -3,6 +3,7 @@ package amaging.schedu.db;
 
 import java.util.List;
 
+import amaging.schedu.bean.ACPlan;
 import amaging.schedu.bean.ChildCode;
 import amaging.schedu.bean.Login;
 import amaging.schedu.bean.RegMember;
@@ -40,6 +41,13 @@ public interface QMLOracleMapper {
 	/*자식리스트*/
 	public List<ChildCode> displayChildList(ChildCode child);
 	
-	/*학사일정 8개 getAcCode, getPlanList, setPlanList, updPlanList, delPlanList*/
-	
+	/*학사일정  getAcCode, getPlanList, setPlanList, updPlanList, delPlanList*/
+	public List<ACPlan> getAcList(ACPlan plan);
+	public List<ACPlan> getPlanList(List<ACPlan> pl);
+	public List<ACPlan> getTeacherAcList(ACPlan plan);
+	public List<ACPlan> getStudentAcList(ACPlan plan);
+	public List<ACPlan> getAPlanList(ACPlan plan);//관리자학사일정
+	public int setPlanList(ACPlan plan);
+	public int updPlanList(ACPlan plan);
+	public int delPlanList(ACPlan plan);
 }

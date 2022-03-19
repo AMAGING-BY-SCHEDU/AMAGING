@@ -3,7 +3,6 @@ import lombok.Data;
 
 @Data
 public class GradeBean {
-
    String sBACode;
    String acCode;
    String acName;

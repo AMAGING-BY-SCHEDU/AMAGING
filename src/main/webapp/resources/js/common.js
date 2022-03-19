@@ -40,10 +40,11 @@ function getAjaxData(action,data,fn,method){
 		}
 		
 }
+
 function sendMessage(message){
-   if(message!=""){
-   alert(message);
-   }   
+	if(message!=""){
+	alert(message);
+	} 
 }
 function accessOut(){
       const form = makeForm("", "/Logout", "post");

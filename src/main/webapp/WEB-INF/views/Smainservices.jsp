@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>학생 메인 페이지</title>
  <script src="resources/js/common.js"></script>
+ <script src="resources/js/acPlan.js"></script>
 <style>
 #frame {
 	width: 100%;
@@ -233,7 +234,7 @@ position:absolute; left:45%; top:1%;
 			<div id="body">
 				<div id="colorline"></div>
 				<div class="servicebutton">
-					<input type="button" class="bothB" id="oneB" onclick=""> <input
+					<input type="button" class="bothB" id="oneB" onclick="getAcPlanPage('smainservice','/AcPlanPage')"> <input
 						type="button" class="bothB" id="twoB" onclick=""> <input
 						type="button" class="bothB" id="threeB" onclick=""> <input
 						type="button" class="bothB" id="fourB" onclick=""> <input

@@ -8,7 +8,6 @@
  <script src="resources/js/common.js"></script>
  <script src="resources/js/acPlan.js"></script>
  <script src="resources/js/childList.js"></script>
-
 <style>
 #frame {width:100%; height:100%;
    position:absolute; top:5%;}
@@ -260,6 +259,7 @@ position:absolute; left:45%; top:1%;
                     <input type="button" class="bothB" id="sevenB" onclick="getAcPlanPage('pmainservice','/InfoPage')">  
                </div>
             <div id="mainpage">
+            	
             	<div id="childBox" name="childBox"></div>
             </div>
          </div>

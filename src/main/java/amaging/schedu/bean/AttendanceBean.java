@@ -8,6 +8,8 @@ public class AttendanceBean {
    String studentId;
    String studentName;
    String date;
+   String dayDate;
    String subjectCode;
    String atStatusName;
-} 
+}
+

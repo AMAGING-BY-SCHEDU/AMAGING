@@ -72,7 +72,6 @@ public class Authentication extends amaging.schedu.common.CommonMethod{
 				page = "Amainservices";
 			}
 
-
 			pu.setAttribute("sessionInfo", uf);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -160,8 +159,8 @@ public class Authentication extends amaging.schedu.common.CommonMethod{
 	}else{tran=false;}
 		// Commit;
 		this.setTransactionEnd(tran);
-		mav.getModelMap().addAttribute("msg", message);
-		mav.setViewName(page);
+			mav.setViewName(page);
+			mav.getModelMap().addAttribute("msg", message);
 	}
 	private void getChildList(ModelAndView mav) {
 		ChildCode cc = new ChildCode();
