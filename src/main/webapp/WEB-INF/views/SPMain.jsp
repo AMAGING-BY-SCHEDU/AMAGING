@@ -169,11 +169,11 @@
 
 
 .box {
+   text-align: center;
    line-height: 100px;
    font-size: 100px;
    color: #fff;
    font-weight: bold;
-
 }
 
 .slider {
@@ -183,8 +183,8 @@
    
 
 }
-#banner   {position:absolute; left:50.6%; top:43.8%;
-      width:100%; height:100%;}
+#banner	{position:absolute; left:50.6%; top:43.8%;
+		width:100%; height:100%;}
 #slider2{margin-top:16%;}
 #slider1{position:fixed; top:76.2%; width:30%;right:49.6%; }
 
@@ -209,7 +209,7 @@ h1{color:#A6A6A6; font-size:30%; position:absolute; left:34%; top:36%; }
             <div id="subphoto"></div>
              </div>
             <div id="loginMom">
-               <div id="pointer"  onClick="getPage('2');" ><span id="st"> 학생로그인</span></div> 
+               <div id="pointer"  onClick="getPage('2')" ><span id="st"> 학생로그인</span></div> 
                <div id="pointer2"  onClick="getPage('1')"><span id="pa">학부모로그인</span></div>
             </div>
 

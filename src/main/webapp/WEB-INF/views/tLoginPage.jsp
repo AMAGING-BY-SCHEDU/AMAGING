@@ -83,7 +83,8 @@
       </div>
       <div>
           <div>
-            <input type="button" id="loginbtn" value="LOGIN" onClick="authentication()"/>
+            <input type="button" id="loginbtn" value="LOGIN" onClick="authentication('3')"/>
+
          </div>
       </div>
    

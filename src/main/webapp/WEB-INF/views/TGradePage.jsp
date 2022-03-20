@@ -6,6 +6,10 @@
 <meta charset="UTF-8">
 <title>선생님 성적 페이지</title>
  <script src="resources/js/common.js"></script>
+ <script src="resources/js/gradePage.js"></script>
+
+ 
+ 
 <style>
 #frame {width:100%; height:100%;
    position:absolute; top:5%;}
@@ -237,17 +241,54 @@ position:absolute; left:45%; top:1%;
        font-weight:800;
        font-size:130%;
       }
+ #exampleModal {width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+ 		}
+ 				}
+ #modalDialog {background: #FFFFFF;
+            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+            backdrop-filter: blur( 13.5px );
+            -webkit-backdrop-filter: blur( 13.5px );
+            border-radius: 10px;
+            border: 1px solid #FFFFFF;
+            width: 400px;
+            height: 1000px;
+            position: relative;
+            top: -100px;
+            padding: 10px;
+			  
+           	  
 </style>
 
 </head>
-<body onload="">
-   <form name="" action="file:///C:/" method="get">
-      <div id="basic">
+<body onload="myAcademyList('${sessionInfo.userId}','get')">
+
+
+
+   <form name="tMain" action="file:///C:/" method="get">
+      <div id="basic" >
          <div id="frame">
             <div id="logo"></div>
-             <div id="sessionBox"><span id="session">김현우님 환영합니다.</span></div>
+             <div id="sessionBox"><span id="session">${sessionInfo.userName}님 환영합니다.</span>
+             					  <input type="hidden" value='${sessionInfo.userId}' name="userId" />
+								  <input type="hidden" value='${sessionInfo.userCode}' name="userCode" />
+             					  <input id = "acCode" type = "hidden" value = ''/>
+             					  <span id="acCode" hidden="hidden">""</span>
+             </div>
             <div id="logOut">
-               <input type="button" id="btn" value="로그아웃" onclick="" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
+               <input type="button" id="btn" value="로그아웃" onclick="accessOut()" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
             </div>
          </div>
          
@@ -255,29 +296,51 @@ position:absolute; left:45%; top:1%;
             <div id="colorline"></div>
                <div class="servicebutton">
                   <input type="button" class="bothB" id="oneB" onclick=""> 
-                  <input type="button" class="bothB" id="twoB" onclick="">
+                  <input type="button" class="bothB" id="twoB" onclick="getPage('tMain','TGradePage')">
                   <div class="div1">
-                    <div class="div2" onclick="" >
+                    <div id ="gradeFirst" class="div2" onclick="myAcademyList('${sessionInfo.userId}','get')" >
                    ●&nbsp;&nbsp;성적조회
                      </div>
-                    <div class="div2" onclick="">
+                    <div class="div2" id ="gradeSecond" onclick="myAcademyList('${sessionInfo.userId}','reg')" >
                  ●&nbsp;&nbsp;성적등록
                       </div>
-                 <div class="div2" onclick="">
+                 <div class="div2" id ="gradeThird" onclick="myAcademyList('${sessionInfo.userId}','mod')" >
                  ●&nbsp;&nbsp;성적수정
                       </div>
                      </div> 
-                  <input type="button" class="bothB" id="threeB" onclick=""> 
+                  <input type="button" class="bothB" id="threeB" onclick="">
                   <input type="button" class="bothB" id="fourB" onclick="">
                    <input type="button" class="bothB" id="fiveB" onclick="">
-                   <input type="button" class="bothB" id="sixB" onclick="">  
+                   <input type="button" class="bothB" id="sixB" onclick="">
                     
                </div>
-            <div id="mainpage"></div>
+            <div id="mainpage" style = "overflow : auto"></div>
          </div>
       </div>
-   </form>
+      
 
+   </form>
+<form>
+<div class="modal fade" id="exampleModal" style = "display : none;">
+  <div class="modal-dialog" id="modalDialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <input type="button" id="btn-close" class="btn-close" value="X" style = "width:30px; height:30px;"/>
+      </div>
+      <div class="modal-body">
+        
+          <div class="mb-3">
+            <input type="text" class="form-control" id="inputPwd" placeholder ="비밀번호 입력"/>
+            <input type="button" class="confirmBtn" id="confirmBtn" value ="확인"/>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</form>   
+
+</body>
 <script>
    function mouseOver(obj) {
       let fColor = (obj.id == "btn") ? "#000000" : "#FFFFFF";
@@ -322,4 +385,4 @@ position:absolute; left:45%; top:1%;
 
    init();
 </script>
-</body></html>
+</html>

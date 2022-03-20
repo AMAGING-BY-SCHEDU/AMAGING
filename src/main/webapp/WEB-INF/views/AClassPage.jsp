@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>관리자 수업관리 페이지</title>
  <script src="resources/js/common.js"></script>
+ <script src="resources/js/ATimeTable.js"></script>
 <style>
 #frame {
    width: 100%;
@@ -80,7 +81,6 @@
    height: 80%;
    float: right;
    margin-right: 5.5%;
-   background-image: url(resources/images/.png);
    background-size: 30% 55%;
    background-repeat: no-repeat;
    background-position: center center;
@@ -246,9 +246,14 @@ position:absolute; left:45%; top:1%;
 
 
             <span id="logo"></span>
-            <div id="sessionBox"><span id="session">김현우님 환영합니다.</span></div>
+            <div id="sessionBox"><span id="session">${sessionInfo.userName}님 환영합니다.</span>
+				<input	type="hidden" value='${sessionInfo.userId}' name="userId" />
+				<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
+				<input	type="hidden" value='${sessionInfo.acCode}' name="acCode" />
+				<input	type="hidden" value='${sessionInfo.tier}' name="tier" />            
+			</div>
             <div id="logOut">
-               <span><input type="button" id="btn" value="로그아웃" onclick=""
+               <span><input type="button" id="btn" value="로그아웃" onclick="accessOut()"
                   onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)"></span>
             </div>
          </div>
@@ -261,13 +266,13 @@ position:absolute; left:45%; top:1%;
                
                <input type="button" class="bothB" id="twoB" onclick=""> 
                <div class="div1">
-                    <div class="div2" onclick="" >
+                    <div class="div2" onclick="getCourseList('${sessionInfo.acCode}')" >
                    ●&nbsp;&nbsp;수업등록
                      </div>
-                    <div class="div2" onclick="">
+                    <div class="div2" onclick="getAClassList('${sessionInfo.acCode}')">
                  ●&nbsp;&nbsp;수업수정 
                       </div>
-                      <div class="div2" onclick="">
+                      <div class="div2" onclick="subjectFormList('${sessionInfo.acCode}')">
                   ●&nbsp;&nbsp;과목등록 
                      </div>
                   <div class="div2" onclick="">
@@ -283,8 +288,22 @@ position:absolute; left:45%; top:1%;
 
             </div>
             <div id="mainpage"></div>
-         </div>
-      </div>
+         <div class="container" id="container">
+			<div class="mdialog">
+				<div class="mcontent">
+					<!-- Modal Header -->
+					<div class="mheader">
+						<h4 id="mheader" class="mtitle"></h4>
+					</div>					 			
+					<!-- Modal body -->
+					<div class="mbody" id="mbody" value=""></div>
+					<!-- Modal footer -->
+					<div class="mfooter">
+						<input type="button" class="mbtn" value="X" onclick="closeModal()"/>						
+					</div>
+				</div>
+			</div>
+		</div>  
    </form>
 
    <script type="text/javascript">

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,16 +61,18 @@ public class MovePageController {
    public String moveLoginPage(ModelAndView mav, @ModelAttribute Login lg) {
 	  String page=null;
       if(lg.getUserCode() == 3) {
-         /*�����Էα���������*/
+
+         /*선생님로그인페이지*/
     	  page = "tLoginPage";
       }else if(lg.getUserCode() == 2) {
-         /*�л��α���������*/
+         /*학생로그인페이지*/
     	  page = "sLoginPage";
       }else if(lg.getUserCode() == 4) {
-          /*�����ڷα���������*/
+          /*관리자로그인페이지*/
     	  page = "aLoginPage";
        }else {
-    	   /*�кθ�α���������*/
+    	   /*학부모로그인페이지*/
+
     	   page = "pLoginPage";
        }
       return page;
@@ -110,15 +113,16 @@ public class MovePageController {
       return mav;
    }
    @PostMapping("/TGradePage")
-   public ModelAndView tGradePage(ModelAndView mav, @ModelAttribute UserInfo uf) {
-      grade.backController(0, mav);
-      return mav;
-   }
-   @PostMapping("/GradePage")
-   public ModelAndView gradePage(ModelAndView mav, @ModelAttribute UserInfo uf) {
-      grade.backController(0, mav);
-      return mav;
-   }
+	 public ModelAndView tGradePage(ModelAndView mav, @ModelAttribute UserInfo uf) {
+		 grade.backController(1, mav);
+		 return mav;
+	 }
+	 @PostMapping("/GradePage")
+	 public ModelAndView gradePage(ModelAndView mav, @ModelAttribute UserInfo uf) {
+		 mav.addObject("uf",uf);
+		 grade.backController(9, mav);
+		 return mav;
+	 }
    @PostMapping("/GetArticleForm")
    public ModelAndView getArticleForm(ModelAndView mav, @ModelAttribute UserInfo uf) {
       ad.backController(0, mav);
@@ -139,8 +143,10 @@ public class MovePageController {
 	public ModelAndView updPrPage(ModelAndView mav, @ModelAttribute RegParent regp) {
 	    mav.addObject("regp",regp);
 		pi.backController(4, mav);
+
 		return mav;
 	}
+
    @PostMapping("/SQnAPage")
    public ModelAndView sQnAPage(ModelAndView mav, @ModelAttribute UserInfo uf) {
       qna.backController(0, mav);
@@ -161,4 +167,11 @@ public class MovePageController {
       qna.backController(0, mav);
       return mav;
    }
+
+	@PostMapping("/TAttendancePage")
+	public ModelAndView TAPage(ModelAndView mav, @ModelAttribute UserInfo uf) {
+		ad.backController(1, mav.addObject("uf",uf));
+		return mav;
+	}
 }
+

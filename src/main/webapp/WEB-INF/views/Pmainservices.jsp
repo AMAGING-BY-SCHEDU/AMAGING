@@ -7,10 +7,7 @@
 <title>학부모 메인 페이지</title>
  <script src="resources/js/common.js"></script>
  <script src="resources/js/acPlan.js"></script>
-  <script src="resources/js/childList.js"></script>
-
-  
- 
+ <script src="resources/js/childList.js"></script>
 <style>
 #frame {width:100%; height:100%;
    position:absolute; top:5%;}
@@ -239,9 +236,10 @@ position:absolute; left:45%; top:1%;
       <div id="basic">
          <div id="frame">
             <div id="logo"></div>
-             <div id="sessionBox"><span id="session"><span id='childName'>${sessionInfo.stName}</span>부모 ${sessionInfo.userName}님 환영합니다.
-             	<input	type="hidden" value='${sessionInfo.userId}' name="userId" />
-				<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
+             <div id="sessionBox"><span id="session"><span id='childName'></span>${sessionInfo.userName}님 환영합니다.
+             	<input	type="hidden" value="${sessionInfo.userId}" name="userId" />
+				<input	type="hidden" value="${sessionInfo.userCode}" name="userCode" />
+				<input	type="hidden" value="${sessionInfo.userName}" id ="userName" />
 				<input	type="hidden" value="" name="sEmail" id ="sEmail" />
 				<input	type="hidden" value="" name="sCode" id ="sCode" />
 			</span></div>
@@ -254,7 +252,7 @@ position:absolute; left:45%; top:1%;
             <div id="colorline"></div>
                <div class="servicebutton">
                   <input type="button" class="bothB" id="oneB" onclick="getAcPlanPage('pmainservice','/AcPlanPage')"> 
-                  <input type="button" class="bothB" id="twoB" onclick=""> 
+                  <input type="button" class="bothB" id="twoB" onclick="getPage('pmainservice','/GradePage')"> 
                   <input type="button" class="bothB" id="threeB" onclick=""> 
                   <input type="button" class="bothB" id="fourB" onclick="">
                    <input type="button" class="bothB" id="fiveB" onclick=""> 

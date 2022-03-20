@@ -4,8 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>학생 시간표 페이지</title>
+<title>학생 성적 페이지</title>
  <script src="resources/js/common.js"></script>
+ <script src="resources/js/gradePage.js"></script>
+
 <style>
 #frame {
 	width: 100%;
@@ -127,7 +129,7 @@ height:9%;
 	background-repeat: no-repeat;
 	background-position: right center;
 	cursor: pointer;
-	
+	background-color: #FFBB00;
 }
 
 #threeB {
@@ -139,7 +141,6 @@ height:9%;
 	background-repeat: no-repeat;
 	background-position: right center;
 	cursor: pointer;
-	
 }
 
 #fourB {
@@ -151,7 +152,6 @@ height:9%;
 	background-repeat: no-repeat;
 	background-position: right center;
 	cursor: pointer;
-	background-color: #FFBB00;
 }
 
 #fiveB {
@@ -221,12 +221,13 @@ position:absolute; left:45%; top:1%;
 </style>
 
 </head>
-<body onload="">
-	<form name="" action="" method="get">
+<body onload="getMyGrade()">
+	<form name="sMain" action="" method="post">
 		<div id="basic">
 			<div id="frame">
 				<div id="logo"></div>
-				 <div id="sessionBox"><span id="session">김현우님 환영합니다.</span></div>
+				 <div id="sessionBox"><span id="session">${sessionInfo.userName}님 환영합니다.</span></div>
+				 <input id="userId" type="hidden" value="${sessionInfo.userId}"/>
 				<div id="logOut">
 					<input type="button" id="btn" value="로그아웃" onclick="accessOut()"
 						onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
@@ -236,13 +237,12 @@ position:absolute; left:45%; top:1%;
 			<div id="body">
 				<div id="colorline"></div>
 				<div class="servicebutton">
-					<input type="button" class="bothB" id="oneB" onclick=""> <input
-						type="button" class="bothB" id="twoB" onclick=""> <input
-						type="button" class="bothB" id="threeB" onclick=""> <input
-						type="button" class="bothB" id="fourB" onclick=""> <input
-						type="button" class="bothB" id="fiveB" onclick="">
-						<input
-						type="button" class="bothB" id="sixB" onclick="">
+					<input type="button" class="bothB" id="oneB" onclick="">
+					<input type="button" class="bothB" id="twoB" onclick="getPage('sMain','GradePage')">
+					<input type="button" class="bothB" id="threeB" onclick="">
+					<input type="button" class="bothB" id="fourB" onclick="">
+					<input type="button" class="bothB" id="fiveB" onclick="">
+					<input type="button" class="bothB" id="sixB" onclick="">
 				</div>
 				<div id="mainpage"></div>
 			</div>

@@ -3,6 +3,7 @@ package amaging.schedu.db;
 
 import java.util.List;
 
+import amaging.schedu.bean.ACPlan;
 import amaging.schedu.bean.ChildCode;
 import amaging.schedu.bean.Login;
 import amaging.schedu.bean.RegMember;
@@ -20,26 +21,33 @@ public interface QMLOracleMapper {
 	public int isTeacherPassword(Login login);
 	public int isAdminPassword(Login login);
 		
-	/*Á¢¼Ó±â·Ï*/
+	/*ì ‘ì†ê¸°ë¡*/
 	public int setAccessHistory(UserInfo uf);
 	public int setAdminAccessHistory(UserInfo uf);
 	public int setAccessOutHistory(UserInfo uf);
 	public int setAdminAccessOutHistory(UserInfo uf);
 	
-	/*¼¼¼ÇÁ¤º¸*/
+	/*ì„¸ì…˜ì •ë³´*/
 	public UserInfo getTeacherInfo(Login login);
 	public UserInfo getParentInfo(Login login);
 	public UserInfo getStudentInfo(Login login);
 	public UserInfo getAdminInfo(Login login);
 	
-	/*È¸¿øµî·Ï*/
+	/*íšŒì›ë“±ë¡*/
 	public int setStudentData(RegMember regM);
 	public int setParentsData(RegMember regM);
 	public int setTeacherData(RegMember regM);
 	
-	/*ÀÚ½Ä¸®½ºÆ®*/
+	/*ìì‹ë¦¬ìŠ¤íŠ¸*/
 	public List<ChildCode> displayChildList(ChildCode child);
 	
-	/*ÇĞ»çÀÏÁ¤ 8°³ getAcCode, getPlanList, setPlanList, updPlanList, delPlanList*/
-	
+	/*í•™ì‚¬ì¼ì •  getAcCode, getPlanList, setPlanList, updPlanList, delPlanList*/
+	public List<ACPlan> getAcList(ACPlan plan);
+	public List<ACPlan> getPlanList(List<ACPlan> pl);
+	public List<ACPlan> getTeacherAcList(ACPlan plan);
+	public List<ACPlan> getStudentAcList(ACPlan plan);
+	public List<ACPlan> getAPlanList(ACPlan plan);//ê´€ë¦¬ìí•™ì‚¬ì¼ì •
+	public int setPlanList(ACPlan plan);
+	public int updPlanList(ACPlan plan);
+	public int delPlanList(ACPlan plan);
 }

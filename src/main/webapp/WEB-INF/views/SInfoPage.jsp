@@ -346,7 +346,7 @@
 </style>
 
 </head>
-<body onload="infoPage()">
+<body onload="dotClick()">
 	<form name="SInfo" action="" method="post">
 		<div id="basic">
 			<div id="frame">
@@ -357,7 +357,7 @@
 					<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
 			    </span></div>
 				<div id="logOut">
-					<input type="button" id="btn" value="로그아웃" onclick=""
+					<input type="button" id="btn" value="로그아웃" onclick="accessOut()"
 						onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
 				</div>
 			</div>

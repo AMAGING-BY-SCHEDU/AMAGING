@@ -69,17 +69,6 @@
 
 }
 
-#mainpage {
-   width: 73%;
-   height: 80%;
-   float: right;
-   margin-right: 5.5%;
-   
-   background-size: 30% 55%;
-   background-repeat: no-repeat;
-   background-position: center center;
-}
-
 .bothB {
      width: 85%;
    height: 13%;
@@ -239,17 +228,64 @@ position:absolute; left:45%; top:1%;
        font-weight:800;
        font-size:130%;
       }
+      
+	.container		{background-color:gray;
+					background: rgba(0,0,0,0.4);
+					position:absolute;
+					width:100%;
+					height:100%;
+					left:0;
+					top:0;
+					text-align:center;
+					display:flex;}
+	.mdialog		{border:2px solid white;
+					border-radius:25px;
+					background-color:#fff;
+					position:absolute;
+					top:30%;
+					left:38.2%;
+					width:39%;
+					height:450px;
+					transform:translate(-50%,-50%);}
+
+#mainpage {
+   width: 73%;
+   height: 80%;
+   float: right;
+   margin-right: 5.5%;
+   
+   background-size: 30% 55%;
+   background-repeat: no-repeat;
+   background-position: center center;
+}
+
+#mainOne			{width: 45%;
+					height: 20%;
+					float:left;}/*border:2px solid black;*/
+#mainTwo			{width: 45%;
+					height: 20%;
+					float:right;}
+#mainThree			{width: 90%;
+					height: 80%;
+					clear:both;
+					overflow:auto;}
+
 </style>
 
 </head>
-<body onload="">
-   <form name="" action="file:///C:/" method="get">
+<body onload="closeModal();">
       <div id="basic">
          <div id="frame">
             <div id="logo"></div>
-             <div id="sessionBox"><span id="session">김현우님 환영합니다.</span></div>
+             <div id="sessionBox">
+             	<span id="academySession" value="as"></span>
+             	<span id="nameSession" >${sessionInfo.userName}님 환영합니다.</span>
+             	<input type="hidden" name= "tCode" value="${sessionInfo.userId}" />
+             </div>
             <div id="logOut">
-               <input type="button" id="btn" value="로그아웃" onclick="" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
+               <input type="button" id="btn" value="로그아웃" onclick="accessOut()" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
+               <input type="hidden" value='${sessionInfo.userId}' name="userId" />
+			   <input type="hidden" value='${sessionInfo.userCode}' name="userCode"/>
             </div>
          </div>
          
@@ -260,13 +296,13 @@ position:absolute; left:45%; top:1%;
                   <input type="button" class="bothB" id="twoB" onclick="">
                   <input type="button" class="bothB" id="threeB" onclick="">
                        <div class="div1">
-                    <div class="div2" onclick="" >
+                    <div class="div2" id="div1" onclick="attandanceStart('${sessionInfo.userId}');" >
                    ●&nbsp;&nbsp;출석체크
                      </div>
-                    <div class="div2" onclick="">
+                    <div class="div2" id="cAS" value="${sessionInfo.userId}" onclick="checkAttandance('${sessionInfo.userId}');">
                  ●&nbsp;&nbsp;출석조회
                       </div>
-                 <div class="div2" onclick="">
+                 <div class="div2" onclick="modAttandance('${sessionInfo.userId}');">
                  ●&nbsp;&nbsp;출석수정
                       </div>
                      </div>  
@@ -275,12 +311,620 @@ position:absolute; left:45%; top:1%;
                    <input type="button" class="bothB" id="sixB" onclick="">  
                     
                </div>
-            <div id="mainpage"></div>
+            <div id="mainpage">
+            	<div id="mainOne" name="mainOne"></div>
+            	<div id="mainTwo" name="mainTwo"></div>
+            	<div id="mainThree" name="mainThree"></div>
+            </div>
          </div>
       </div>
-   </form>
-
+  
+	<form name='dynamicFormData'>
+	<!-- The Modal BackGround -->
+		<div class="container" id="container">
+			<div class="mdialog">
+				<div class="mcontent">
+			
+				<!-- The Modal header -->
+					<div class="mheader">
+						<h4 class="mtitle" id="mheader"></h4>
+					</div>
+				
+				<!-- The Modal body -->
+					<div class="mboby" id="mbody" value="">Modal Body</div>
+				
+				<!-- The Modal footer -->
+					<div class="mfooter">
+						<input type="button" class="mbtn" name="command" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
 <script>
+attandanceS('${sessionInfo.userId}');
+startS();
+function startS(){
+	if(sessionStorage.getItem("ID") != ""){
+		var han = sessionStorage.getItem("ID");
+		var upTitle = document.getElementById("academySession");
+		upTitle.setAttribute("value",han);
+		wT();
+	}else{
+		let upTitle = document.getElementById("academySession");
+		upTitle.setAttribute("value","as");
+	}
+}
+function wT(){
+	var upT = document.getElementById("academySession");
+	upT.innerText = sessionStorage.getItem("ID");
+}
+function attandanceS(userIdData){//학원 리스트 갖고 오기
+	const action = "GetASchoolList";
+	const data = "userId=" + encodeURIComponent(userIdData);
+	getAjax(action, data, "academyList");
+}
+function openModal(){
+	let container = document.getElementById("container");
+	container.style.filter="alpha(Opacity=50)";//반투명
+	container.style.display = "block";//화면띄우기
+}
+function closeModal(){
+	let container = document.getElementById("container");
+	container.style.display = "none";
+	
+	var aIdx = document.getElementById("academySession");
+	var sAInfo = aIdx.getAttribute("value");
+	
+	if(sAInfo != "as"){
+		sessionStorage.getItem("ID");
+	}
+}
+function modAttandance(userIdData){
+	
+	let saData = document.getElementById("mainThree");
+	while(saData.hasChildNodes()){
+		saData.removeChild(saData.lastChild);
+	}
+	
+	const action = "GetASchoolList";
+	const data = "userId=" + encodeURIComponent(userIdData);
+	getAjax(action, data, "academyList");
+	
+	var aIdx = document.getElementById("academySession");
+	var sAInfo = aIdx.getAttribute("value");
+	
+	if(sessionStorage.getItem("ID") != null){
+		const action = "selectClass";
+		const dataAcName = "userId=" + encodeURIComponent(userIdData) + "&acName=" + encodeURIComponent(sAInfo);
+		getAjax( action, dataAcName, "modSA");
+	}else{
+		alert("교육기관을 선택해주세요");
+		
+	}
+}
+
+function modSA(data){
+	let clList
+	clList = JSON.parse(data);
+	let upLeft = document.getElementById("mainOne");
+	
+	let rightData = '<div>';
+		rightData += '<span>';
+		rightData += '<select name="classI" id="classI" ">';
+		rightData += '<option value="교육과정">교육과정';
+		rightData += '</option>';
+	for(let a=0;a<clList.length;a++){
+		rightData += '<option value="'+ clList[a].clCode +'">'+ clList[a].clName;
+		rightData += '</option>';
+	}
+		rightData += '</select>';
+		rightData += '</span>';
+		rightData += '<span>';//달력
+		rightData += '<select name="" id="checkYear" value="" >';
+		rightData += '</select>';
+		rightData += '<select name="" id="checkMonth" value="">';
+		rightData += '</select>';
+		rightData += '<select name="" id="checkDay" value="">';
+		rightData += '</select>';
+		rightData += '</span>';
+		rightData += '<span>';//버튼
+		rightData += '<input type="button" value="조회" onClick="modCheckAS();"/>'
+		rightData += '</span>';
+		rightData += '<div>';
+		
+		upLeft.innerHTML = rightData;
+		today();
+}
+
+function modCheckAS(){
+	var cl = document.getElementById("classI").value;
+	var cy = document.getElementById("checkYear").value;
+	var cm = document.getElementById("checkMonth").value;
+	var cd = document.getElementById("checkDay").value;
+	
+	if(cm < 10 && cd < 10){
+		var dd = cy + '0' + cm + '0' + cd;
+	}else if(cm < 10 && cd >= 10){
+		var dd = cy + '0' + cm + cd;
+	}else if(cm >= 10 && cd < 10){
+		var dd = cy + cm + '0' + cd;
+	}else{
+		var dd = cy + cm + cd;
+	}
+	var pdd = parseInt(dd);
+	let tId = document.getElementsByName("tCode")[0].value;
+	
+	const action = "checkStudent";
+	const dataCS = "teacherId=" + encodeURIComponent(tId) + "&weedDay=" + encodeURIComponent(pdd) + "&clCode=" + encodeURIComponent(cl);
+	getAjax( action, dataCS, "modCheckStudent");
+}
+
+function modCheckStudent(data){
+	var csList;
+	csList = JSON.parse(data);
+	const csListL = csList.length;
+	let centerForm = document.getElementById("mainThree");
+	
+	let idx=0;
+	let centerD = '<div id="scroller">';
+		centerD += '<div>';
+		centerD += '<span>이름</span>';
+		centerD += '<span>출석여부</span>';
+		centerD += '</div>';
+	for(idx ; idx<csList.length ; idx++){
+		centerD += '<div>';
+		centerD += '<span id="studentN('+idx+')" value="'+ csList[idx].studentId +'" >' + csList[idx].studentName + '</span>';
+		centerD += '<span><input type="hidden" id="status('+idx+')" value="'+ csList[idx].atStatus +'" ></span>';
+		centerD += '<span><input type="hidden" id="crCode('+idx+')" value="'+ csList[idx].subjectCode +'" ></span>';
+		centerD += '<span><select id="attendanceStatus('+idx+')">';
+		centerD += '<option value="21">출석';
+		centerD += '<option value="22">지각';
+		centerD += '<option value="23">결석';
+		centerD += '</select></span>';
+		centerD += '</div>';
+	}
+		centerD += '<div>';
+		centerD += '<input type="button" value="수정" onClick="modDatasend('+csListL+');">';
+		centerD += '</div>';
+		centerD += '</div>';
+		
+		centerForm.innerHTML = centerD;
+		
+		autoSelect(csList);
+}
+
+function modDatasend(cData){
+	var cy = document.getElementById("checkYear").value;
+	var cm = document.getElementById("checkMonth").value;
+	var cd = document.getElementById("checkDay").value;
+	
+	if(cm < 10 && cd < 10){
+		var dd = cy + '0' + cm + '0' + cd;
+	}else if(cm < 10 && cd >= 10){
+		var dd = cy + '0' + cm + cd;
+	}else if(cm >= 10 && cd < 10){
+		var dd = cy + cm + '0' + cd;
+	}else{
+		var dd = cy + cm + cd;
+	}
+	var pdd = parseInt(dd);
+	
+	let sendData = [];
+	for(let idx =0 ; idx<cData ; idx++){
+		var si = document.getElementById("studentN("+idx+")");
+		var siResult = si.getAttribute("value");
+		
+		sendData.push({subjectCode:document.getElementById("crCode("+idx+")").value
+			,studentId:siResult
+			,date:pdd
+			,atStatus:document.getElementById("attendanceStatus("+idx+")").value});
+	}
+	getJson("modAttendance",JSON.stringify(sendData),"modAfterResult");
+}
+function modAfterResult(data){
+	const tIDvalue = document.getElementById("cAS");
+	const tID = tIDvalue.getAttribute("value");
+	
+	const sendData = "teacherId=" + encodeURIComponent(tID) + "&weedDay=" +	encodeURIComponent(data);
+	getAjax("recheckSA", sendData, "recheckForm");
+}
+
+function recheckForm(data){
+	let saData = document.getElementById("mainThree");
+	while(saData.hasChildNodes()){
+		saData.removeChild(saData.lastChild);
+	}
+	
+	let reData = JSON.parse(data);
+	var yD = (reData[0].dayDate).substring(0,4);
+	var mD = (reData[0].dayDate).substring(4,6);
+	var dD = (reData[0].dayDate).substring(6);
+	
+	let rightData = '<div>';
+		rightData += '<div>'+ yD +"년"+ mD +"월"+ dD +"일 출석 현황"+'</div>';
+		rightData += '<div></div>';
+	for(let a=0;a<reData.length;a++){
+		rightData += '<div>';
+		rightData += '<span>'+ reData[a].studentName +'</span>';
+		rightData += '<span>'+ reData[a].atStatusName +'</span>';
+		rightData += '</div>';
+	}
+		
+		rightData += '<div>';
+		
+		saData.innerHTML = rightData;	
+}
+
+function autoSelect(data){
+	for(let idx =0 ; idx<data.length ; idx++){
+		var aaa = document.getElementById("status("+idx+")").value;
+		
+		if(aaa == '21'){
+			document.getElementById("attendanceStatus("+idx+")").selectedIndex = "0";
+		}else if(aaa == '22'){
+			document.getElementById("attendanceStatus("+idx+")").selectedIndex = "1";
+		}else if(aaa == '23'){
+			document.getElementById("attendanceStatus("+idx+")").selectedIndex = "2";
+		}
+	}
+}
+
+function checkAttandance(userIdData){
+	
+	let saData = document.getElementById("mainThree");
+	while(saData.hasChildNodes()){
+		saData.removeChild(saData.lastChild);
+	}
+	
+	const action = "GetASchoolList";
+	const data = "userId=" + encodeURIComponent(userIdData);
+	getAjax(action, data, "academyList");
+	
+	var aIdx = document.getElementById("academySession");
+	var sAInfo = aIdx.getAttribute("value");
+	
+	if(sessionStorage.getItem("ID") != null){
+		const action = "selectClass";
+		const dataAcName = "userId=" + encodeURIComponent(userIdData) + "&acName=" + encodeURIComponent(sAInfo);
+		getAjax( action, dataAcName, "selectClassAndDate");
+	}else{
+		alert("교육기관을 선택해주세요");
+		
+	}
+}
+
+let clList;
+function selectClassAndDate(ClList){
+	clList = JSON.parse(ClList);
+	let upLeft = document.getElementById("mainOne");
+	
+	let rightData = '<div>';
+		rightData += '<span>';
+		rightData += '<select name="classI" id="classI" ">';
+		rightData += '<option value="교육과정">교육과정';
+		rightData += '</option>';
+	for(let a=0;a<clList.length;a++){
+		rightData += '<option value="'+ clList[a].clCode +'">'+ clList[a].clName;
+		rightData += '</option>';
+	}
+		rightData += '</select>';
+		rightData += '</span>';
+		rightData += '<span>';//달력
+		rightData += '<select name="" id="checkYear" value="" >';
+		rightData += '</select>';
+		rightData += '<select name="" id="checkMonth" value="">';
+		rightData += '</select>';
+		rightData += '<select name="" id="checkDay" value="">';
+		rightData += '</select>';
+		rightData += '</span>';
+		rightData += '<span>';//버튼
+		rightData += '<input type="button" value="조회" onClick="checkASendD();"/>'
+		rightData += '</span>';
+		rightData += '<div>';
+		
+		upLeft.innerHTML = rightData;
+		today();
+}
+
+function checkASendD(){
+	var cl = document.getElementById("classI").value;
+	var cy = document.getElementById("checkYear").value;
+	var cm = document.getElementById("checkMonth").value;
+	var cd = document.getElementById("checkDay").value;
+	
+	if(cm < 10 && cd < 10){
+		var dd = cy + '0' + cm + '0' + cd;
+	}else if(cm < 10 && cd >= 10){
+		var dd = cy + '0' + cm + cd;
+	}else if(cm >= 10 && cd < 10){
+		var dd = cy + cm + '0' + cd;
+	}else{
+		var dd = cy + cm + cd;
+	}
+	var pdd = parseInt(dd);
+	let tId = document.getElementsByName("tCode")[0].value;
+	
+	const action = "checkStudent";
+	const dataCS = "teacherId=" + encodeURIComponent(tId) + "&weedDay=" + encodeURIComponent(pdd) + "&clCode=" + encodeURIComponent(cl);
+	getAjax( action, dataCS, "checkStudent");
+}
+
+function checkStudent(data){
+	var csList;
+	csList = JSON.parse(data);
+	let centerForm = document.getElementById("mainThree");
+	
+	let idx=0;
+	let centerD = '<div id="scroller">';
+		centerD += '<div>';
+		centerD += '<span>이름</span>';
+		centerD += '<span>출석여부</span>';
+		centerD += '</div>';
+	for(idx ; idx<csList.length ; idx++){
+		centerD += '<div>';
+		centerD += '<span id="studentN" value="'+ csList[idx].studentId +'" >' + csList[idx].studentName + '</span>';
+		centerD += '<span id="statusN" value="'+ csList[idx].atStatusName +'" >' + csList[idx].atStatusName + '</span>';
+		centerD += '</div>';
+	}
+		centerD += '</div>';
+		
+		centerForm.innerHTML = centerD;
+}
+//-----------------------------------------------------------------------달력
+function today(){
+	var d = new Date();
+	return getDateStr(d);
+}
+function getDateStr(data){
+	var Year = data.getFullYear();
+	var Month = (data.getMonth()+1);
+	var Day = data.getDate();
+	
+	Month = (Month<10)?"0" + String(Month):Month;
+	Day = (Day<10)?"0" + String(Day):Day;
+	
+	for(var i = 2015; i < 2055; i++){
+		checkYear.options[i] = new Option(i + "년", i);
+	}
+	checkYear.selectedIndex = Year;
+	
+	for (var i = 1; i < 13; i++) {
+		checkMonth.options[i] = new Option(i + "월", i);
+	}
+	checkMonth.selectedIndex = Month;
+	
+	checkDay.options.length = 0;
+	var year = parseInt(checkYear.options[checkYear.selectedIndex].value);
+	var month = parseInt(checkMonth.options[checkMonth.selectedIndex].value);
+	var lastDay = getLastDay(year, month);
+	
+	for (var i = 1; i <= lastDay ; i++) {
+		checkDay.options[i] = new Option(i + "일", i);
+	}
+	checkDay.selectedIndex = Day;
+}
+function getLastDay(year, month) {
+	var lastDay = new Date(year, month);
+	lastDay.setDate(0);//0을 주면 알아서 월간 이동
+	return lastDay.getDate();
+}
+//-----------------------------------------------------------------------달력
+function attandanceStart(userIdData){//학원 리스트 갖고 오기
+
+	const pData = document.getElementById("mainThree");
+	while(pData.hasChildNodes()){
+		pData.removeChild(pData.lastChild);
+	}
+	
+	const action = "GetASchoolList";
+	const data = "userId=" + encodeURIComponent(userIdData);
+	getAjax(action, data, "academyList");
+	
+	var aIdx = document.getElementById("academySession");
+	var sAInfo = aIdx.getAttribute("value");
+	
+	if(sessionStorage.getItem("ID") != null){
+		const action = "selectClass";
+		const dataAcName = "userId=" + encodeURIComponent(userIdData) + "&acName=" + encodeURIComponent(sAInfo);
+		getAjax( action, dataAcName, "selectClassBar");
+	}else{
+		alert("교육기관을 선택해주세요");
+	}
+}
+
+function getAjax(action, data, fn) {
+	let ajax = new XMLHttpRequest();
+	ajax.onreadystatechange = function() {
+		if (ajax.readyState == 4 && ajax.status == 200) {
+			window[fn](ajax.responseText);
+		}
+	};
+	ajax.open("POST", action, true);
+	ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	ajax.send(data);	
+}
+let acList;
+function academyList(AcList){
+	acList = JSON.parse(AcList);
+	
+	let upRight = document.getElementById("mainTwo");
+	let r=0;
+	let rightData = '<select name="aInfo" id="aInfo" onchange="insertA(this)">';
+		rightData += '<option value="교육기관">교육기관';
+		rightData += '</option>';
+	for(r;r<acList.length;r++){
+		rightData += '<option name="selectACList" value="'+ acList[r].acName +'">'+ acList[r].acName;
+		rightData += '</option>';
+	}
+		rightData += '</select>';
+		
+	upRight.innerHTML = rightData;
+}
+
+function insertA(e){
+	const value = e.value;
+	sessionStorage.setItem('ID',value);
+	var aIdx = document.getElementById("academySession");
+	
+	aIdx.innerText = value;
+	let upTitle = document.getElementById("academySession");
+	upTitle.setAttribute("value",value);
+	
+	const userId =document.getElementsByName("tCode")[0].value;
+	const action = "selectClass";
+	const dataAcName = "userId=" + encodeURIComponent(userId) + "&acName=" + encodeURIComponent(value);
+	getAjax( action, dataAcName, "selectClassBar");
+	
+	if(sessionStorage.getItem("ID") == "value"){
+	}else{	
+	let mheader = document.getElementById("mheader");
+	let mbody = document.getElementById("mbody");
+	let command = document.getElementsByName("command")[0];
+	
+	command.setAttribute("onClick","secondLogin('"+value+"')");
+	command.setAttribute("value","로그인");
+	
+	mheader.innerText = "PW 입력 해주세요";
+	let slf = "<div>";
+		slf += "<div><input type='password' name='secondPassword' placeholder='PASSWORD'/></div>";
+		slf += "<div><span name='wrongMessage' value='as'></span></div>";
+		slf += "</div>";
+	mbody.innerHTML = slf;
+	openModal();
+	}
+}
+
+function secondLogin(data){
+	let pw = document.getElementsByName("secondPassword")[0].value;
+	let tId = document.getElementsByName("tCode")[0].value;
+	
+	const action = "ssecondLogin";
+	const dataAcName = "tCode=" + encodeURIComponent(tId) + "&acName=" + encodeURIComponent(data) + "&password=" + encodeURIComponent(pw);
+	getAjax( action, dataAcName, "sClass");
+}
+
+function sClass(data){
+	if(data == "success"){
+		alert("교육기관이 선택되었습니다.");
+		closeModal();
+	}else{
+		alert("비번이 틀렸습니다.");
+		var aIdx = document.getElementById("academySession");
+		aIdx.innerText = "";
+		let upTitle = document.getElementById("academySession");
+		upTitle.setAttribute("value","as");
+		aInfo.selectedIndex = "교육기관";
+		let aData = document.getElementById("mainOne");
+		while(aData.hasChildNodes()){
+			aData.removeChild(aData.lastChild);
+		}
+		sessionStorage.clear();
+		closeModal();
+	}
+}
+
+function selectClassBar(ClList){
+	clList = JSON.parse(ClList);
+	let upLeft = document.getElementById("mainOne");
+	
+	let rightData = '<select name="classInfo" id="classInfo" onchange="classSelect(this)">';
+		rightData += '<option value="교육과정">교육과정';
+		rightData += '</option>';
+	for(let a=0;a<clList.length;a++){
+		rightData += '<option value="'+ clList[a].clCode +'">'+ clList[a].clName;
+		rightData += '</option>';
+	}
+		rightData += '</select>';
+		
+		upLeft.innerHTML = rightData;
+}
+
+function classSelect(data){
+	let cc = data.value;
+	let tId = document.getElementsByName("tCode")[0].value;
+	
+	const action = "studentList";
+	const dataF = "clCode=" + encodeURIComponent(cc) + "&teacherId=" + encodeURIComponent(tId);
+	getAjax( action, dataF, "studentLF");
+	
+}
+
+let stList;
+function studentLF(StList){
+	stList = JSON.parse(StList);
+	let centerForm = document.getElementById("mainThree");
+	
+	let idx=0;
+	let centerData = '<div id="scroller">';
+		centerData += '<div>';
+		centerData += '<span>-</span>';
+		centerData += '<span>출석</span>';
+		centerData += '<span>지각</span>';
+		centerData += '<span>결석</span>';
+		centerData += '</div>';
+	for(idx ; idx<stList.length ; idx++){
+		centerData += '<div>';
+		centerData += '<input type="hidden" class="stName" value="' + stList[idx].studentId + '"/>';
+		centerData += '<span id="studentN" value="'+ stList[idx].crCode +'" >' + stList[idx].sname + '</span>';
+		centerData += '<span><input type="radio" class="checkS" name="checkS+'+idx+'+" value="'+ "21" +'" /></span>';
+		centerData += '<span><input type="radio" class="checkS" name="checkS+'+idx+'+" value="'+ "22" +'" /></span>';
+		centerData += '<span><input type="radio" class="checkS" name="checkS+'+idx+'+" value="'+ "23" +'" /></span>';
+		centerData += '</div>';
+	}
+		centerData += '<div>';	
+		centerData += '<input type="button" name="insertS" value="save" onClick="saveStudentA('+ idx +')"/>';
+		centerData += '</div>';
+		centerData += '</div>';
+		
+		centerForm.innerHTML = centerData;
+}
+
+function saveStudentA(){
+	const sName = document.getElementsByClassName("stName").length;
+	
+	const sList = document.getElementById("studentN");
+	const sLValue = sList.getAttribute("value");
+	
+	let saveData =[];
+	let idx=0;
+	for(idx ; idx<sName ; idx++){
+		const query = 'input[name="checkS+'+idx+'+"]:checked';
+		const selectedEls = document.querySelectorAll(query);
+		
+		let result = "";
+		selectedEls.forEach((el) => {
+			result = el.value;
+			saveData.push({studentId:document.getElementsByClassName("stName")[idx].value,atStatus:result,subjectCode:sLValue});
+		})
+	}
+	getJson("studentAttendanceForm",JSON.stringify(saveData),"sendMessage");
+}
+
+function sendMessage(data){
+	let aData = document.getElementById("mainThree");
+	
+	while(aData.hasChildNodes()){
+		aData.removeChild(aData.lastChild);
+	}
+	if(data == "success"){
+		alert("저장되었습니다.");
+	}
+}
+
+function getJson(action, data, fn) {
+	let ajax = new XMLHttpRequest();
+	ajax.onreadystatechange = function() {			
+		if (ajax.readyState == 4 && ajax.status == 200) {
+			window[fn](ajax.responseText);
+		}
+	};
+	ajax.open("post", action, true);
+	ajax.setRequestHeader("Content-type","application/json; charset=utf-8");
+	ajax.send(data);
+}
+
    function mouseOver(obj) {
       let fColor = (obj.id == "btn") ? "#000000" : "#FFFFFF";
       obj.style.color = fColor;
@@ -324,4 +968,4 @@ position:absolute; left:45%; top:1%;
 
    init();
 </script>
-</body></html>
+</html>

@@ -334,8 +334,8 @@ position:absolute; left:45%; top:1%;
 </style>
 
 </head>
-<body onload="infoPage('${category}')">
-   <form name="" action="file:///C:/" method="get">
+<body onload="dotClick('${category}')">
+   <form name="" action="" method="get">
       <div id="basic">
          <div id="frame">
             <div id="logo"></div>
@@ -344,7 +344,7 @@ position:absolute; left:45%; top:1%;
 				<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
             </span></div>
             <div id="logOut">
-               <input type="button" id="btn" value="로그아웃" onclick="" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
+               <input type="button" id="btn" value="로그아웃" onclick="accessOut()" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
             </div>
          </div>
          

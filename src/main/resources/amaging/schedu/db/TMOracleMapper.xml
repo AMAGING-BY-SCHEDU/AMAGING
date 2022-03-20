@@ -3,6 +3,41 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="amaging.schedu.db.TMOracleMapper">
+
+		<!-- TimeTable -->
+		
+	<select id="getCourseList" parameterType="amaging.schedu.bean.ClassBean" resultType="amaging.schedu.bean.ClassBean">
+		SELECT CR_NAME AS CRNAME ,CR_ACCODE AS ACCODE,CR_CODE AS CRCODE
+		FROM CR WHERE CR_ACCODE=#{acCode}
+	</select>
+	
+	<insert id="insertClass" parameterType="amaging.schedu.bean.ClassBean" >
+		INSERT INTO "CL"(CL_CRACCODE,CL_CRCODE,CL_CODE,CL_NAME,CL_FEE,CL_SDATE,CL_EDATE)
+		VALUES(#{acCode},#{crCode},'C'||(SELECT SUBSTR(MAX(CL_CODE),2)+1 FROM "CL" WHERE CL_CRACCODE=#{acCode}),
+		#{clName},#{clFee},#{clSdate},#{clEdate})
+	</insert>
+
+	<select id="getAClassList" parameterType="amaging.schedu.bean.ClassBean" resultType="amaging.schedu.bean.ClassBean">
+		SELECT CR_ACCODE AS ACCODE,
+    	   CR_CODE AS CRCODE,
+    	   CR_NAME AS CRNAME,
+    	   CL_CODE AS CLCODE,
+    	   CL_NAME AS CLNAME,
+    	   CL_FEE AS CLFEE,
+     	  CL_SDATE AS CLSDATE,
+     	  CL_EDATE AS CLEDATE   
+		FROM "CL" INNER JOIN CR ON "CL".CL_CRACCODE = CR.CR_ACCODE AND CR.CR_CODE="CL".CL_CRCODE
+		WHERE CL_CRACCODE=#{acCode}
+	</select>
+	
+	<update id="updClass" parameterType="amaging.schedu.bean.ClassBean">
+		 UPDATE "CL" SET CL_NAME=#{clName},CL_FEE=#{clFee},CL_SDATE=#{clSdate},CL_EDATE=#{clEdate} 
+		 WHERE CL_CRACCODE=#{acCode} AND CL_CRCODE=#{crCode} AND CL_CODE=#{clCode}
+	</update>	
+		
+		
+		<!-- PrivateInfo -->
+		
 	<select id="getAcList" parameterType="amaging.schedu.bean.AcList" resultType="amaging.schedu.bean.AcList">
 		 SELECT AC_CODE AS ACCODE, AC_NAME AS ACNAME, AC_ADDRESS AS ACADDRESS FROM AC WHERE AC_NAME LIKE '%'||#{acName}||'%'
 	</select>

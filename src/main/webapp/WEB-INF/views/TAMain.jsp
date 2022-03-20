@@ -5,15 +5,26 @@
 <head>
 <meta charset="UTF-8">
 <title>TAMain</title>
+ <script src="resources/js/common.js"></script>
 <script src=""></script>
 <script>
-	function test() {
-		let form = document.getElementById("damnnn");
-		let damn = document.getElementById("damn");
-		form.appendChild(damn);
-		form.submit();
-	}
+	function getPage3(userCode) {
+  		const f = document.getElementsByName("TApage")[0];
+   	 	const hidden = makeInputElement("hidden","userCode",userCode,"");
+    	f.appendChild(hidden);
+    	document.getElementsByName("userCode")[0];
+    	f.submit();
+ 	}
 	
+	function makeInputElement(type, name, value, placeholder){
+		const input = document.createElement("input");
+		input.setAttribute("type", type);
+		input.setAttribute("name", name);
+		if(value != ""){input.setAttribute("value", value);}
+		if(placeholder != ""){input.setAttribute("placeholder", placeholder);}
+		
+		return input;
+	}
 	function ajax() {
 		
 	}
@@ -171,23 +182,23 @@
 
 
 .box {
-	text-align: center;
-	line-height: 100px;
-	font-size: 100px;
-	color: #fff;
-	font-weight: bold;
+   text-align: center;
+   line-height: 100px;
+   font-size: 100px;
+   color: #fff;
+   font-weight: bold;
 
 }
 
 .slider {
-	width: 30%;
-	height: 12%;
-	margin-top: 1%;
-	
+   width: 30%;
+   height: 12%;
+   margin-top: 1%;
+   
 
 }
 #banner{ position:absolute; left:50.5%; top:46%;
-	width:100%; height:100%;}
+   width:100%; height:100%;}
 #slider2{margin-top:16%;}
 #slider1{position:fixed; top:76.2%; width:30%;right:49.6%; }
 
@@ -212,8 +223,8 @@ h1{color:#A6A6A6; font-size:30%; position:absolute; left:34%; top:36%; }
 				<div id="subphoto"></div>
 			    </div>
 				<div id="loginMom">
-					<div id="pointer"  onClick="getPage3('3')" ><span id="st"> 선생님로그인</span></div> 
-					<div  id="pointer2"  onClick="getPage3('4')"><span id="pa">관리자로그인</span></div>
+					<div id="pointer"   onClick="getPage3('3')" ><span id="st">선생님로그인</span></div> 
+					<div id="pointer2"  onClick="getPage3('4')" ><span id="pa">관리자로그인</span></div>
 				</div>
 
 			<div id="banner">
