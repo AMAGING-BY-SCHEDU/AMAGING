@@ -12,3 +12,4 @@ public class RegParent {
    String regPrInfo;
    String sEmail;
 }
+

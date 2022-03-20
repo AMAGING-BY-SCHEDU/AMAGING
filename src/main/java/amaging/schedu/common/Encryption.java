@@ -145,6 +145,8 @@ public class Encryption implements PasswordEncoder{
 	InvalidAlgorithmParameterException,
 	IllegalBlockSizeException, 
 	BadPaddingException {
+		//IOS url-encode 대응
+		encryptionData = encryptionData.replace(" ", "+");
 		String keyValue = key(hint);
 		HashMap<String, Object> mapAES = AES256Key(keyValue);
 

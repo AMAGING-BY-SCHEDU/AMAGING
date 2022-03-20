@@ -25,7 +25,7 @@ function makeInputElement(type, name, value, placeholder){
 function getAjaxData(action,data,fn,method){
 	const ajax = new XMLHttpRequest();
 		ajax.onreadystatechange = function() {
-			if ( ajax.readyState== 4 && ajax.status == 200) {
+			if ( ajax.readyState== 4 && ajax.status == 200) {		
 				window[fn](ajax.responseText);						
 			}
 		};
@@ -40,22 +40,35 @@ function getAjaxData(action,data,fn,method){
 		}
 		
 }
+
 function sendMessage(message){
+	if(message!=""){
 	alert(message);
+	} 
 }
-
-function accessOut(){}
-
+function accessOut(){
+      const form = makeForm("", "/Logout", "post");
+      const uId = document.getElementsByName("userId")[0].value;
+      const uc = document.getElementsByName("userCode")[0].value;
+      
+      const userId = makeInputElement("hidden", "userId", uId, "");
+      const userCode = makeInputElement("hidden", "userCode", uc, "");
+      
+      form.appendChild(userId);
+      form.appendChild(userCode);
+      
+      document.body.appendChild(form);
+       form.submit();
+    
+}
 function getPage(formName,action){
    const form = document.getElementsByName(formName)[0];
       form.setAttribute("action",action);
-      form.submit();
-   
-}
-
+      form.submit();  
 
 function findPassword(formName) {
 	const form = document.getElementsByName(formName)[0];
 	/* input개체에 대한 값의 유효성 체크 */
 	form.submit();
+
 }

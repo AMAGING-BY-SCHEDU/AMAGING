@@ -67,31 +67,31 @@
 </style>
 <body class ="background">
 <form name ="login" action="/Login" method="post">
-<input   type="hidden" value='4' name="userCode" />
+<input	type="hidden" value='4' name="userCode" />
 <div id="basic">
 <div id="body">
-   <div id="logo"></div>
-   <div id="inBody">
-      <div id="welcome">관리자 로그인</div>
-      <div id="pabox">
-         <div>
-            <input class = "inputE" type="text" name="adCode" placeholder="ID 입력 "/>
-         </div>
-         <div>
-            <input class = "inputP" type="password" name="password" placeholder=" PASSWORD"/>
-         </div>
-      </div>
-      <div>
-          <div>
-            <input type="button" id="loginbtn" value="LOGIN" onClick="authentication1('4')"/>
-         </div>
-      </div>
+	<div id="logo"></div>
+	<div id="inBody">
+		<div id="welcome">관리자 로그인</div>
+		<div id="pabox">
+			<div>
+				<input class = "inputE" type="text" name="adCode" placeholder="ID 입력 "/>
+			</div>
+			<div>
+				<input class = "inputP" type="password" name="password" placeholder=" PASSWORD"/>
+			</div>
+		</div>
+		<div>
+ 			<div>
+				<input type="button" id="loginbtn" value="LOGIN" onClick="authentication1('4')"/>
+			</div>
+		</div>
    
-      <div id="bottombox">
-         <div id="findPassword"  onClick="">비밀번호 찾기 </div>
-            <div id="join" onClick="getJoinPage(4)">회원가입</div>
-      </div>
-   </div>
+		<div id="bottombox">
+			<div id="findPassword"  onClick="">비밀번호 찾기 </div>
+      		<div id="join" onClick="getJoinPage(4)">회원가입</div>
+		</div>
+	</div>
 </div>
 </div>
 </form>

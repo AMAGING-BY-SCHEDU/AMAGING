@@ -4,5 +4,6 @@ import lombok.Data;
 public class Login {
 	String email;
 	String password;
+	String adCode;
 	int userCode;
 }

@@ -172,23 +172,23 @@
 
 
 .box {
-	text-align: center;
-	line-height: 100px;
-	font-size: 100px;
-	color: #fff;
-	font-weight: bold;
+   text-align: center;
+   line-height: 100px;
+   font-size: 100px;
+   color: #fff;
+   font-weight: bold;
 
 }
 
 .slider {
-	width: 30%;
-	height: 12%;
-	margin-top: 1%;
-	
+   width: 30%;
+   height: 12%;
+   margin-top: 1%;
+   
 
 }
 #banner{ position:absolute; left:50.5%; top:46%;
-	width:100%; height:100%;}
+   width:100%; height:100%;}
 #slider2{margin-top:16%;}
 #slider1{position:fixed; top:76.2%; width:30%;right:49.6%; }
 

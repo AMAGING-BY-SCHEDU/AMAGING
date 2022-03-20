@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>자녀등록 메일</title>
  <script src="resources/js/common.js"></script>
+  <script src="resources/js/info.js"></script>
 <style>
 #body {
 	
@@ -81,14 +82,18 @@
 </style>
 </head>
 <body>
-<form name="" action="/" method="get">
+<form name="regParent" action="/" method="get">
 	<div id="basic">
 		<div id="logo"></div>
 		<div id="body">
-		<input class="box" type="text" id="son" placeholder="자녀 이메일 주소"/>
-		<input class="box" type="text" id="mom" placeholder="부모님(본인) 이메일 주소"/>
+		<span>자녀 이메일</span>
+		<input class="box" type="text" id="son" placeholder='${code.SEmail}' readOnly/>
+		<span>부모님 이메일</span>
+		<input class="box" type="text" id="mom" placeholder='${code.PEmail}' readOnly/>
 		<div id="btnbox">
-		<input type="button" id="btn" value="변경" onClick="" /></div>
+		<input type="button" id="btn" value="수락" onClick="parentReg('UpdParent','${code.userId}','${code.prCode}')" />
+		<input type="button" id="btn" value="거절" onClick="parentReg('RejectParent','${code.userId}','${code.prCode}')" />
+		</div>
 		</div>
 	</div>
 </form>

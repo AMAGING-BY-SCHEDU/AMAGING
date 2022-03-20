@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>관리자 메인 페이지</title>
  <script src="resources/js/common.js"></script>
-
+ <script src="resources/js/acPlan.js"></script>
 <style>
 #frame {
    width: 100%;
@@ -212,7 +212,7 @@ position:absolute; left:45%; top:1%;
 
 </head>
 <body onload="">
-   <form name="" action="" method="get">
+   <form name="amainservice" action="" method="post">
       <div id="basic">
          <div id="frame">
 
@@ -234,7 +234,7 @@ position:absolute; left:45%; top:1%;
             <div id="colorline"></div>
             <div class="servicebutton">
 
-               <input type="button" class="bothB" id="oneB" onclick="">              
+               <input type="button" class="bothB" id="oneB" onclick="getAcPlanPage('amainservice','/AcPlanPage')">              
                <input type="button" class="bothB" id="twoB" onclick=""> 
                <input type="button" class="bothB" id="threeB" onclick="">
                <input type="button" class="bothB" id="fourB" onclick="">

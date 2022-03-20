@@ -1,11 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원가입 폼</title>
  <script src="resources/js/common.js"></script>
+ <script >
+	
+	function regMember(userCode){
+		
+		 /*1. HTML 개체와의 연결*/
+		 const form = document.getElementsByName("join")[0];
+		
+		/*2. 사용자 데이터의 수집*/
+		const hidden = makeInputElement("hidden", "userCode", userCode, "");
+	
+		form.appendChild(hidden);
+		
+		const userData = [document.getElementsByName("userName")[0], document.getElementsByName("email")[0], document.getElementsByName("password")[0], document.getElementsByName("check")[0]];
+		const message = ["이름을 입력하세요", "이메일을 입력하세요", "비밀번호를 입력", "확인 비밀번호를 입력하세요"];
+		/*3. 유효성 검사*/	
+		for(let index=0; index<userData.length; index++){
+			if(!isEmpty(userData[index])){
+				alert(message[index]);
+				return;
+			}
+			
+			if(document.getElementsByName("password")[0].value!=document.getElementsByName("check")[0].value){
+				alert("비밀번호기 일치하지 않습니다. 다시입력하세요");
+				document.getElementById("password").value='';
+				document.getElementById("check").value='';
+				return;
+			}
+			
+			
+		}
+		
+		
+		/*4. 서버 전송*/
+		form.submit();
+		
+	
+		
+	}
+ 
+ </script>
 <style>
 #basic {
 	position: fixed;
@@ -130,37 +171,36 @@ width:96.5%;
 </style>
 </head>
 <body>
-	<form name="" action="/" method="get">
+	<form name="join" action="/Join" method="post">
 		<div id="basic">
 			<div id="logo"></div>
 			<div id="body">
 				<div id="big1">
 				<div class="moji" id="lineOne">이름</div>
 				<div id="lineOneS">
-					<input class="box" type="text" id="name" placeholder="이름입력">
+					<input class="box" type="text" id="userName" name="userName" placeholder="이름입력">
 				</div>
 				</div>
 				<div id="big2">
 				<div class="moji" id="lineTwo">이메일</div>
 				<div id="lineTwoS">
-					<input class="box" type="text" id="email" placeholder="이메일입력">
+					<input class="box" type="text" id="email" name="email" placeholder="이메일입력">
 				</div>
 				</div>
 				<div id="big3">
 				<div class="moji" id="lineThree">비밀번호</div>
 				<div id="lineThreeS">
-					<input class="box" type="password" id="password"
-						placeholder="비밀번호 입력">
+					<input class="box" type="password" id="password" name="password"  placeholder="비밀번호 입력">
 				</div>
 				</div>
 				<div id="big4">
 				<div class="moji" id="lineFour">비밀번호 확인</div>
 				<div id="lineFourS">
-					<input class="box" type="password" id="check" placeholder="비밀번호 확인">
+					<input class="box" type="password" id="check" name="check" placeholder="비밀번호 확인">
 				</div>
 				</div>
 				<div id="lineFive">
-					<input type="button" id="btn" value="가입완료" onclick="">
+					<input type="button" id="btn" value="가입완료" onclick="regMember('${sessionInfo.userCode}')">
 				</div>
 
 			</div>

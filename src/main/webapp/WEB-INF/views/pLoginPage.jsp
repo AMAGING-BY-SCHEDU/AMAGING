@@ -5,48 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>부모님 로그인</title>
-
-
+<script src="resources/js/common.js"></script>
+<script src="resources/js/login.js"></script>
 </head>
-<script>
-
-function authentication(userCode){
-   const f = document.getElementsByName("login")[0];
-   const hidden = makeInputElement("hidden","userCode",userCode,"");
-  
-   const userData = [document.getElementsByName("email")[0],
-   document.getElementsByName("password")[0]];
-   
-   const message = [ "email 입력해 주세요!", "퍠쓰워드 입력해 주세요"];
-   for (let index = 0; index < userData.length; index++) {
-      if (!isEmpty(userData[index])) {
-         alert(message[index]);
-         return;
-      } 
-   
-   }
-   f.appendChild(hidden);
-   f.submit();
-}
-function isEmpty(obj){
-   let check = true;
-   if(obj.value == ""){
-      check = false;
-   }
-   return check;
-}
-
-function makeInputElement(type, name, value, placeholder){
-    const input = document.createElement("input");
-    input.setAttribute("type", type);
-    input.setAttribute("name", name);
-    if(value != ""){input.setAttribute("value", value);}
-    if(placeholder != ""){input.setAttribute("placeholder", placeholder);}
-    
-    return input;
- }
-
-</script>
 <style>
 
 
@@ -103,8 +64,9 @@ function makeInputElement(type, name, value, placeholder){
 			margin-top:31.6%;}		   
 #pabox{ width:90%; height:75%;  position:fixed;   }
 </style>
-<body class ="background">
-<form name ="login" action="/Login" method="post">
+<body class ="background" onLoad = "sendMessage('${msg}')">
+<form name ="login"  method="post">
+<input	type="hidden" value="1" name="userCode" />
 <div id="basic">
 <div id="body">
 	<div id="logo"></div>
@@ -126,7 +88,7 @@ function makeInputElement(type, name, value, placeholder){
    
 		<div id="bottombox">
 			<div id="findPassword"  onClick="">비밀번호 찾기 </div>
-      		<div id="join" onClick="">회원가입</div>
+      		<div id="join" onClick="getJoinPage(1)">회원가입</div>
 		</div>
 	</div>
 </div>

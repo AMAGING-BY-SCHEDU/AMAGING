@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>선생님 정보수정 페이지</title>
- <script src="resources/js/common.js"></script>
+<script src="resources/js/common.js"></script>
+<script src="resources/js/info.js"></script>
 <style>
 #frame {width:100%; height:100%;
    position:absolute; top:5%;}
@@ -239,16 +240,109 @@ position:absolute; left:45%; top:1%;
         color: #00A6EF;
        font-weight:800;
        font-size:130%;
-      }
+}
+
+.container {
+	background-color: gray;
+	background: rgba(0, 0, 0, 0.4);
+	position: absolute;
+	width: 100%;
+	min-height: 100%;
+	left: 0;
+	top: 0;
+	text-align: center;
+}
+
+.mdialog {
+	border: 2px solid white;
+	border-radius: 25px;
+	background-color: #ffffff;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 50%;
+	height: 450px;
+	transform: translate(-50%, -50%);
+}
+.mbody {
+	border: 2px solid #92acbb;
+	margin-left:10%;
+	width:80%;
+	pont-size: 100pt;
+}
+.acCode{	
+	border: 2px solid #92acbb;
+	float: left;
+	width:20%;
+	height:100%;
+}
+.acName{
+	border: 2px solid #92acbb;
+	float: left;
+	width:20%;
+	height:100%;
+}
+.acAddress{	
+	border: 2px solid #92acbb;
+	width:100%;
+	height:100%;
+}
+.mfooter{
+	top:85%;
+	left:30%;
+  	position: fixed;
+	clear:both;
+	margin-bottom:10%;
+	width:40%;
+	height:50px;
+}
+.acbox{
+	margin-left:25%;
+	margin-top:10%;
+	width: 50%;	
+	height: 20%;
+}
+.box {	
+	border: 8px solid #00A6EF;
+	width: 100%;
+	font-size: 200%;
+	text-align:center;	
+	height: 100%;
+	border-radius: 10px;
+}
+.regButton {
+	border-top: 5px solid #00A6EF;
+	border-left: 5px solid #00A6EF;
+	border-right: 5px solid #00A6EF;
+	border-bottom: 5px solid #00A6EF;
+	background-color: #00A6EF;
+	margin-left:27%;
+	margin-top:5%;
+	width: 50%;
+	height: 50%;
+	text-align: center;
+	font-size:150%;
+	cursor: pointer;
+	border-radius: 10px;	
+}     
+.mbtn{
+ border-radius: 10px;background-color: #00A6EF; width:50%; height:100%; border: 1px solid #00A6EF;
+}
+.searchBtn{
+ border-radius: 10px; background-color: #00A6EF; width:15%; height:40px; border: 1px solid #00A6EF;
+} 
 </style>
 
 </head>
-<body onload="">
+<body onload="infoPage('${category}')">
    <form name="" action="file:///C:/" method="get">
       <div id="basic">
          <div id="frame">
             <div id="logo"></div>
-             <div id="sessionBox"><span id="session">김현우님 환영합니다.</span></div>
+             <div id="sessionBox"><span id="session">${sessionInfo.userName}님 환영합니다.
+             	<input	type="hidden" value='${sessionInfo.userId}' name="userId" />
+				<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
+            </span></div>
             <div id="logOut">
                <input type="button" id="btn" value="로그아웃" onclick="" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
             </div>
@@ -264,7 +358,7 @@ position:absolute; left:45%; top:1%;
                    <input type="button" class="bothB" id="fiveB" onclick="">
                    <input type="button" class="bothB" id="sixB" onclick="">  
                    <div class="div1">
-                    <div class="div2" onclick="" >
+                    <div class="div2" id="regAcademy" onclick="regAcForm()" >
                    ●&nbsp;&nbsp;학원등록
                      </div>
                     <div class="div2" onclick="">

@@ -242,7 +242,6 @@ position:absolute; left:45%; top:1%;
 					<input type="button" class="bothB" id="fourB" onclick="">
 					<input type="button" class="bothB" id="fiveB" onclick="">
 					<input type="button" class="bothB" id="sixB" onclick="">
-					
 				</div>
 				<div id="mainpage"></div>
 			</div>

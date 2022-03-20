@@ -3,4 +3,44 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="amaging.schedu.db.TMOracleMapper">
+	<select id="getAcList" parameterType="amaging.schedu.bean.AcList" resultType="amaging.schedu.bean.AcList">
+		 SELECT AC_CODE AS ACCODE, AC_NAME AS ACNAME, AC_ADDRESS AS ACADDRESS FROM AC WHERE AC_NAME LIKE '%'||#{acName}||'%'
+	</select>
+	<insert id="regSAcademy" parameterType="amaging.schedu.bean.UserInfo">
+		INSERT INTO SA(SA_STCODE, SA_ACCODE, SA_COCODE)
+		SELECT #{userId},#{acCode},12 
+		FROM DUAL A
+		WHERE NOT EXISTS(SELECT 0 FROM SA 
+		WHERE SA_STCODE= #{userId} AND SA_ACCODE=#{acCode})
+	</insert>
+	<insert id="regTAcademy" parameterType="amaging.schedu.bean.UserInfo">
+		INSERT INTO TA(TA_TCCODE, TA_ACCODE, TA_PASSWORD)
+		SELECT #{userId},#{acCode},4321 
+		FROM DUAL A
+		WHERE NOT EXISTS(SELECT 0 FROM TA 
+		WHERE TA_TCCODE= #{userId} AND TA_ACCODE=#{acCode})
+	</insert>
+	<select id="checkParentEmail" parameterType="amaging.schedu.bean.RegParent" resultType="amaging.schedu.bean.RegParent">
+		SELECT PR_CODE AS PRCODE, PR_NAME AS PRNAME FROM PR WHERE PR_EMAIL=#{pEmail}
+	</select>
+	<select id="checkSPStatus" parameterType="amaging.schedu.bean.RegParent" resultType="integer">
+		SELECT NVL(MAX(SP_COCODE),0) FROM SP WHERE SP_STCODE=#{userId} AND SP_PRCODE=#{prCode}
+	</select>
+	<insert id="regParent" parameterType="amaging.schedu.bean.RegParent">
+		INSERT INTO SP(SP_STCODE, SP_PRCODE, SP_COCODE) 
+		VALUES(#{userId}, #{prCode}, 12)
+	</insert>
+	<select id="getSPEmail" parameterType="amaging.schedu.bean.RegParent" resultType="amaging.schedu.bean.RegParent">
+		SELECT ST_EMAIL AS SEMAIL,
+       		   PR_EMAIL AS PEMAIL
+		FROM SP INNER JOIN ST ON ST.ST_CODE=SP_STCODE
+        		INNER JOIN PR ON PR.PR_CODE=SP_PRCODE
+		WHERE SP_STCODE=#{userId} AND SP_PRCODE=#{prCode}
+	</select>
+	<update id="updParent" parameterType="amaging.schedu.bean.RegParent">
+		UPDATE SP SET SP_COCODE=11 WHERE SP_STCODE=#{userId} AND SP_PRCODE=#{prCode}
+	</update>
+	<delete id="delparent" parameterType="amaging.schedu.bean.RegParent">
+		DELETE SP WHERE SP_STCODE=#{userId} AND SP_PRCODE=#{prCode}
+	</delete>
 </mapper>
