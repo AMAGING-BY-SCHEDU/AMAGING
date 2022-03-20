@@ -35,7 +35,7 @@ function getAjaxData(action,data,fn,method){
 			ajax.send();
 		}else{
 			ajax.open("post", action, true);
-			ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");	
+			ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded; charset=utf-8");	
 			ajax.send(data);
 		}
 		
@@ -65,5 +65,10 @@ function getPage(formName,action){
    const form = document.getElementsByName(formName)[0];
       form.setAttribute("action",action);
       form.submit();  
+
+function findPassword(formName) {
+	const form = document.getElementsByName(formName)[0];
+	/* input개체에 대한 값의 유효성 체크 */
+	form.submit();
 
 }

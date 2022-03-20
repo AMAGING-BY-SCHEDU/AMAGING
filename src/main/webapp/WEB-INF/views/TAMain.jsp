@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>TAMain</title>
+ <script src="resources/js/common.js"></script>
 <script src=""></script>
 <script>
 	function test() {
@@ -212,8 +213,8 @@ h1{color:#A6A6A6; font-size:30%; position:absolute; left:34%; top:36%; }
 				<div id="subphoto"></div>
 			    </div>
 				<div id="loginMom">
-					<div id="pointer"  onClick="getPage3('3')" ><span id="st"> 선생님로그인</span></div> 
-					<div  id="pointer2"  onClick="getPage3('4')"><span id="pa">관리자로그인</span></div>
+					<div id="pointer"   onClick="getPage3('3')" ><span id="st">선생님로그인</span></div> 
+					<div id="pointer2"  onClick="getPage3('4')" ><span id="pa">관리자로그인</span></div>
 				</div>
 
 			<div id="banner">

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,9 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import amaging.schedu.attendance.Attendance;
 import amaging.schedu.auth.Authentication;
 import amaging.schedu.bean.Login;
-
 import amaging.schedu.bean.RegParent;
-
 import amaging.schedu.bean.UserInfo;
 import amaging.schedu.calender.Calender;
 import amaging.schedu.fee.Fee;
@@ -114,15 +113,16 @@ public class MovePageController {
       return mav;
    }
    @PostMapping("/TGradePage")
-   public ModelAndView tGradePage(ModelAndView mav, @ModelAttribute UserInfo uf) {
-      grade.backController(0, mav);
-      return mav;
-   }
-   @PostMapping("/GradePage")
-   public ModelAndView gradePage(ModelAndView mav, @ModelAttribute UserInfo uf) {
-      grade.backController(0, mav);
-      return mav;
-   }
+	 public ModelAndView tGradePage(ModelAndView mav, @ModelAttribute UserInfo uf) {
+		 grade.backController(1, mav);
+		 return mav;
+	 }
+	 @PostMapping("/GradePage")
+	 public ModelAndView gradePage(ModelAndView mav, @ModelAttribute UserInfo uf) {
+		 mav.addObject("uf",uf);
+		 grade.backController(9, mav);
+		 return mav;
+	 }
    @PostMapping("/GetArticleForm")
    public ModelAndView getArticleForm(ModelAndView mav, @ModelAttribute UserInfo uf) {
       ad.backController(0, mav);
@@ -143,6 +143,7 @@ public class MovePageController {
 	public ModelAndView updPrPage(ModelAndView mav, @ModelAttribute RegParent regp) {
 	    mav.addObject("regp",regp);
 		pi.backController(4, mav);
+
 		return mav;
 	}
 

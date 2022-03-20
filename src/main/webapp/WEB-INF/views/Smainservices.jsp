@@ -234,8 +234,8 @@ position:absolute; left:45%; top:1%;
 			<div id="body">
 				<div id="colorline"></div>
 				<div class="servicebutton">
-					<input type="button" class="bothB" id="oneB" onclick="getAcPlanPage('smainservice','/AcPlanPage')"> <input
-						type="button" class="bothB" id="twoB" onclick=""> <input
+					<input type="button" class="bothB" id="oneB" onclick="getAcPlanPage('Smainservices','/AcPlanPage')"> <input
+						type="button" class="bothB" id="twoB" onclick="getPage('Smainservices','/GradePage')"> <input
 						type="button" class="bothB" id="threeB" onclick=""> <input
 						type="button" class="bothB" id="fourB" onclick=""> <input
 						type="button" class="bothB" id="fiveB" onclick="">

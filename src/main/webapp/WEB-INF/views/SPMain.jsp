@@ -184,8 +184,8 @@
    
 
 }
-#banner{ position:absolute; left:50.5%; top:46%;
-   width:100%; height:100%;}
+#banner   {position:absolute; left:50.6%; top:43.8%;
+      width:100%; height:100%;}
 #slider2{margin-top:16%;}
 #slider1{position:fixed; top:76.2%; width:30%;right:49.6%; }
 

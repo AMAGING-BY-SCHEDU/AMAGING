@@ -8,7 +8,6 @@
 <script src="resources/js/common.js"></script>
 <script src="resources/js/login.js"></script>
 </head>
-
 <style>
 
 
@@ -83,7 +82,8 @@
       </div>
       <div>
           <div>
-            <input type="button" id="loginbtn" value="LOGIN" onClick="authentication()"/>
+            <input type="button" id="loginbtn" value="LOGIN" onClick="authentication('3')"/>
+
          </div>
       </div>
    
