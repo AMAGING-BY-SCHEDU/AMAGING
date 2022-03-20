@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>학생 로그인</title>
  <script src="resources/js/common.js"></script>
-
+<script src="resources/js/login.js"></script>
 </head>
 <style>
 
@@ -64,8 +64,9 @@
 			margin-top:31.6%;}		   
 #pabox{ width:90%; height:75%;  position:fixed;   }
 </style>
-<body class ="background">
-<form name ="login" action="" method="post">
+<body class ="background" onLoad = "sendMessage('${msg}')">
+<form name ="login" action="/Login" method="post">
+<input	type="hidden" value='2' name="userCode" />
 <div id="basic">
 <div id="body">
 	<div id="logo"></div>
@@ -73,21 +74,21 @@
 		<div id="welcome">학생 로그인</div>
 		<div id="pabox">
 			<div>
-				<input class = "inputE" type="text" name="" placeholder="Email 입력 "/>
+				<input class = "inputE" type="text" name="email" placeholder="Email 입력 "/>
 			</div>
 			<div>
-				<input class = "inputP" type="password" name="" placeholder=" PASSWORD"/>
+				<input class = "inputP" type="password" name="password" placeholder=" PASSWORD"/>
 			</div>
 		</div>
 		<div>
  			<div>
-				<input type="button" id="loginbtn" value="LOGIN" onClick=""/>
+				<input type="button" id="loginbtn" value="LOGIN" onClick="authentication('2')"/>
 			</div>
 		</div>
    
 		<div id="bottombox">
 			<div id="findPassword"  onClick="">비밀번호 찾기 </div>
-      		<div id="join" onClick="">회원가입</div>
+      		<div id="join" onClick="getJoinPage(2)">회원가입</div>
 		</div>
 	</div>
 </div>

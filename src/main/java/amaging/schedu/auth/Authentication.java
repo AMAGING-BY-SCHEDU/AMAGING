@@ -40,9 +40,11 @@ public class Authentication extends amaging.schedu.common.CommonMethod{
 			break;
 		}
 	}
+
 	private void moveLoginPage(ModelAndView mav) {
 
 	}
+
 	private void login(ModelAndView mav) {
 		Login lg = new Login();
 		UserInfo uf = new UserInfo();
@@ -68,13 +70,12 @@ public class Authentication extends amaging.schedu.common.CommonMethod{
 				uf=om.getAdminInfo(lg);
 				this.om.setAdminAccessHistory(uf);
 				page = "Amainservices";
-				System.out.println("11233");
 			}
+
 			pu.setAttribute("sessionInfo", uf);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		mav.setViewName(page);
 	   }
 	

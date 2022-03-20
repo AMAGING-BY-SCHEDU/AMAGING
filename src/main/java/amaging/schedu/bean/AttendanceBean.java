@@ -12,3 +12,4 @@ public class AttendanceBean {
 	String subjectCode;
 	String atStatusName;
 }
+

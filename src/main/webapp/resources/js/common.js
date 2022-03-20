@@ -26,8 +26,7 @@ function getAjaxData(action,data,fn,method){
 	const ajax = new XMLHttpRequest();
 		ajax.onreadystatechange = function() {
 			if ( ajax.readyState== 4 && ajax.status == 200) {		
-				window[fn](ajax.responseText);
-						
+				window[fn](ajax.responseText);						
 			}
 		};
 		if(method=="get"){
@@ -36,37 +35,37 @@ function getAjaxData(action,data,fn,method){
 			ajax.send();
 		}else{
 			ajax.open("post", action, true);
-			ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");	
+			ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded; charset=utf-8");	
 			ajax.send(data);
 		}
 		
 }
+
 function sendMessage(message){
 	if(message!=""){
 	alert(message);
 	} 
-	/*원본 
-	alert(message);*/
-	
 }
-
 function accessOut(){
-		const form = makeForm("", "/Logout", "post");
-		const uId = document.getElementsByName("userId")[0].value;
-		const uc = document.getElementsByName("userCode")[0].value;
-		
-		const userId = makeInputElement("hidden", "userId", uId, "");
-		const userCode = makeInputElement("hidden", "userCode", uc, "");
-		
-		form.appendChild(userId);
-		form.appendChild(userCode);
-		
-		document.body.appendChild(form);
-	    form.submit();
-		if(sessionStorage.getItem("ID") != null){
-			sessionStorage.clear();
-		}	   
+      const form = makeForm("", "/Logout", "post");
+      const uId = document.getElementsByName("userId")[0].value;
+      const uc = document.getElementsByName("userCode")[0].value;
+      
+      const userId = makeInputElement("hidden", "userId", uId, "");
+      const userCode = makeInputElement("hidden", "userCode", uc, "");
+      
+      form.appendChild(userId);
+      form.appendChild(userCode);
+      
+      document.body.appendChild(form);
+       form.submit();
+    
 }
+function getPage(formName,action){
+   const form = document.getElementsByName(formName)[0];
+      form.setAttribute("action",action);
+      form.submit();  
+
 function accessAdminOut(){
 		const form = makeForm("", "/Logout", "post");
 		const uId = document.getElementsByName("userId")[0].value;
@@ -79,30 +78,12 @@ function accessAdminOut(){
 		form.appendChild(userCode);
 		form.appendChild(acCode);
 		document.body.appendChild(form);
-	    form.submit();
-
-	   
+	    form.submit();   
 }
-function getPage(action){
-	const form = makeForm("", action, "post");
-	const userId=document.getElementsByName("userId")[0].value;
-	const userName=document.getElementsByName("userName")[0].value;
-	const userCode=document.getElementsByName("userCode")[0].value;
-	const acCode=document.getElementsByName("acCode")[0].value;
-	const studentId=document.getElementsByName("studentId")[0].value;
-	const tier=document.getElementsByName("tier")[0].value;
-	
-	const clientData = [makeInputElement("hidden", "userId", userId, ""),
-					    makeInputElement("hidden", "userName", userName, ""),
-					    makeInputElement("hidden", "userCode", userCode, ""),
-					    makeInputElement("hidden", "acCode", acCode, ""),
-					    makeInputElement("hidden", "studentId", studentId, ""),
-					    makeInputElement("hidden", "tier", tier, "")];
-	
-	for(idx=0; idx<clientData.length;idx++){
-		form.appendChild(clientData[idx]);
-	}		
 
-	document.body.appendChild(form);
+function findPassword(formName) {
+	const form = document.getElementsByName(formName)[0];
+	/* input개체에 대한 값의 유효성 체크 */
 	form.submit();
+
 }

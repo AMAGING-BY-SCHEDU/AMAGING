@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>선생님 메인 페이지</title>
  <script src="resources/js/common.js"></script>
+ <script src="resources/js/acPlan.js"></script>
 <style>
 #frame {width:100%; height:100%;
    position:absolute; top:5%;}
@@ -215,8 +216,8 @@ position:absolute; left:45%; top:1%;
 </style>
 
 </head>
-<body>
-   <form name="tMainService" action="/TAttendancePage" method="POST">
+<body onload="">
+   <form name="tmainservices" action="" method="post">
       <div id="basic">
          <div id="frame">
             <div id="logo"></div>
@@ -225,19 +226,19 @@ position:absolute; left:45%; top:1%;
 				<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
             </span></div>
             <div id="logOut">
-               <input type="button" id="btn" value="로그아웃" onclick="accessOut();" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
+               <input type="button" id="btn" value="로그아웃" onclick="accessOut()" onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
             </div>
          </div>
          
          <div id="body">
             <div id="colorline"></div>
                <div class="servicebutton">
-                  <input type="button" class="bothB" id="oneB" onclick=""> 
-                  <input type="button" class="bothB" id="twoB" onclick=""> 
-                  <input type="button" class="bothB" id="threeB" onclick="getNextPage()" /> 
+                  <input type="button" class="bothB" id="oneB" onclick="getAcPlanPage('tmainservice','/AcPlanPage')">
+                  <input type="button" class="bothB" id="twoB" onclick="getPage('tmainservices','/TGradePage')"> 
+                  <input type="button" class="bothB" id="threeB" onclick="getPage('tmainservices','/TAttendancePage')"> 
                   <input type="button" class="bothB" id="fourB" onclick="">
                    <input type="button" class="bothB" id="fiveB" onclick="">
-                   <input type="button" class="bothB" id="sixB" onclick="">  
+                   <input type="button" class="bothB" id="sixB" onclick="getPage('tmainservices','/InfoPage')">  
                     
                </div>
             <div id="mainpage"></div>

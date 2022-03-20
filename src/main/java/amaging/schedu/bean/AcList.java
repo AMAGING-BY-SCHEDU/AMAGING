@@ -6,5 +6,7 @@ public class AcList {
 	String acName;
 	String userId;
 	String tCode;
+	String acAddress;
+	String teacherId;
 	String password;
 }

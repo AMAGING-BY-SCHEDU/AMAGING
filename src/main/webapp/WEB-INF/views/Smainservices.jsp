@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>학생 메인 페이지</title>
  <script src="resources/js/common.js"></script>
+ <script src="resources/js/acPlan.js"></script>
 <style>
 #frame {
 	width: 100%;
@@ -217,27 +218,29 @@ position:absolute; left:45%; top:1%;
 
 </head>
 <body onload="">
-	<form name="" action="file:///C:/" method="get">
+	<form name="Smainservices" action="" method="post">
 		<div id="basic">
 			<div id="frame">
 				<div id="logo"></div>
-				 <div id="sessionBox"><span id="session">김현우님 환영합니다.</span></div>
+				 <div id="sessionBox"><span id="session">${sessionInfo.userName}님 환영합니다.
+				 	<input	type="hidden" value='${sessionInfo.userId}' name="userId" />
+					<input	type="hidden" value='${sessionInfo.userCode}' name="userCode" />
+			    </span></div>
 				<div id="logOut">
-					<input type="button" id="btn" value="로그아웃" onclick=""
-						onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
+					<input type="button" id="btn" value="로그아웃" onclick="accessOut()"	onmouseover="mouseOver(this)" onmouseout="mouseLeave(this)">
 				</div>
 			</div>
 
 			<div id="body">
 				<div id="colorline"></div>
 				<div class="servicebutton">
-					<input type="button" class="bothB" id="oneB" onclick=""> <input
-						type="button" class="bothB" id="twoB" onclick=""> <input
+					<input type="button" class="bothB" id="oneB" onclick="getAcPlanPage('Smainservices','/AcPlanPage')"> <input
+						type="button" class="bothB" id="twoB" onclick="getPage('Smainservices','/GradePage')"> <input
 						type="button" class="bothB" id="threeB" onclick=""> <input
 						type="button" class="bothB" id="fourB" onclick=""> <input
 						type="button" class="bothB" id="fiveB" onclick="">
 						<input
-						type="button" class="bothB" id="sixB" onclick="">
+						type="button" class="bothB" id="sixB" onclick="getPage('Smainservices','/InfoPage')">
 				</div>
 				<div id="mainpage"></div>
 			</div>

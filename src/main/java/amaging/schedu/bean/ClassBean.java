@@ -14,4 +14,5 @@ public class ClassBean {
 	String studentId;
 	String sName;
 	String clEdate;
+	String crCode;
 }
