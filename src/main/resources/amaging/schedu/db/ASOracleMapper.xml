@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="amaging.schedu.db.ASOracleMapper">
+	<select id="getTInfo" parameterType="amaging.schedu.bean.UserInfo" resultType="amaging.schedu.bean.UserInfo">
+      SELECT TC_CODE AS USERID, TC_NAME AS USERNAME, TC_EMAIL AS EMAIL FROM TC WHERE TC_EMAIL=#{email} 
+   </select>
+   <select id="getSchoolList" parameterType="amaging.schedu.bean.UserInfo" resultType="amaging.schedu.bean.AcList">
+		select AC.ac_name as acName, tc.tc_code as tCode ,ac.ac_code as acCode 
+		from TA INNER JOIN TC ON ta.ta_tccode = TC.TC_CODE 
+		INNER JOIN AC ON ta.ta_accode = ac.ac_code 
+		where TC.TC_code = #{userId}
+   </select>
+   <select id="getClassList" parameterType="amaging.schedu.bean.AcList" resultType="amaging.schedu.bean.ClassBean">
+   		SELECT sb.sb_ACODE AS crCode, cl.cl_name AS clName , sb.sb_clcode as clCode 
+		FROM SB INNER JOIN CL ON SB.sb_clcode = CL.CL_CODE and 
+								sb.sb_clcrcode = cl.cl_crcode 
+		WHERE SB.sb_tccode=#{userId} AND cl.cl_craccode IN(SELECT AC_CODE FROM AC WHERE AC_NAME=#{acName})
+   </select>
+   <select id="checkPwd" parameterType ="amaging.schedu.bean.AcList" resultType="int">
+      SELECT COUNT(*) FROM TA WHERE TA.TA_ACCODE IN (select ta.ta_accode 
+        from ta inner join ac on ta.ta_accode = ac.ac_code 
+        where ta.ta_password =#{password} and ta.ta_tccode =#{tCode} and ac.ac_name =#{acName}) AND TA.TA_TCCODE = #{tCode} AND TA.TA_PASSWORD = #{password}
+   </select>
+   <insert id="checkSL" parameterType="amaging.schedu.bean.AcList">
+   		INSERT INTO TAH(TAH_TCACCODE, TAH_TCCODE, TAH_TIME, TAH_COCODE) VALUES((select ta.ta_accode 
+        from ta inner join ac on ta.ta_accode = ac.ac_code 
+        where ta.ta_password =#{password} and ta.ta_tccode =#{tCode} and ac.ac_name =#{acName}),#{tCode},DEFAULT,15)
+   </insert>
+   <select id="getStudentList" parameterType="amaging.schedu.bean.Subject" resultType="amaging.schedu.bean.ClassBean">
+   		SELECT st.st_name as sName, st.st_code as studentId , SB.SB_ACODE as crCode 
+		FROM BS INNER JOIN ST ON bs.bs_stcode = st.st_code 
+      	INNER JOIN SB ON  bs.bs_clcraccode = sb.sb_clcraccode 
+		WHERE sb.sb_tccode=#{teacherId} and sb.sb_clcode=#{clCode}
+   </select>
+   <insert id="insSA" parameterType="amaging.schedu.bean.AttendanceBean">
+		INSERT INTO AT(AT_SBACODE, AT_STCODE, AT_DATE, AT_COCODE) 
+		VALUES(#{subjectCode}, #{studentId}, DEFAULT, #{atStatus})
+	</insert>
+	<select id="getAForm" parameterType="amaging.schedu.bean.Subject" resultType="amaging.schedu.bean.AttendanceBean">
+   		SELECT co.co_code as atStatus, CO.CO_NAME AS atStatusName, ST.ST_NAME AS studentName, st.st_code as studentId, sb.sb_acode as subjectCode 
+		FROM AT INNER JOIN CO ON AT.AT_COCODE = CO.CO_CODE 
+        		INNER JOIN SB ON AT.AT_SBACODE = SB.SB_ACODE 
+        		INNER JOIN ST ON AT.AT_STCODE = ST.ST_CODE 
+		WHERE SUBSTR(AT.AT_DATE,1,8) = TO_DATE(#{weedDay}) AND SB.sb_tccode= #{teacherId} AND SB.sb_clcode = #{clCode}
+   </select>
+   <update id="upSA" parameterType="amaging.schedu.bean.AttendanceBean">
+		UPDATE AT 
+		SET AT_COCODE = #{atStatus} 
+		WHERE AT_SBACODE = #{subjectCode} AND AT_STCODE= #{studentId} AND SUBSTR(AT_DATE,1,8) = TO_DATE(#{date})
+	</update>
+	<select id="getRcAForm" parameterType="amaging.schedu.bean.Subject" resultType="amaging.schedu.bean.AttendanceBean">
+   		SELECT CO.CO_NAME AS atStatusName, ST.ST_NAME AS studentName ,#{weedDay} as dayDate 
+		FROM AT INNER JOIN CO ON AT.AT_COCODE = CO.CO_CODE 
+        		INNER JOIN SB ON AT.AT_SBACODE = SB_ACODE 
+        		INNER JOIN ST ON AT.AT_STCODE = ST.ST_CODE 
+		WHERE SUBSTR(AT_DATE,1,8) =TO_DATE(#{weedDay}) AND sb.sb_tccode=#{teacherId}
+   </select>
+</mapper>

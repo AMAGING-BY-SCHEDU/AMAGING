@@ -1,0 +1,17 @@
+package amaging.schedu.bean;
+
+import lombok.Data;
+
+@Data
+public class UserInfo {
+	String userId;
+	String userName;
+	int userCode;
+	String acCode;
+	String studentId;
+	String tier;
+	String email;
+	String adCode;
+	String USERCODE;
+	
+}
