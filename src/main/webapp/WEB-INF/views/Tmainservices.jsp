@@ -212,6 +212,7 @@ text-align:center;
 #sessionBox{ width:30%; height:10%; 
 position:absolute; left:45%; top:1%;
 }
+
 </style>
 
 </head>
@@ -234,7 +235,7 @@ position:absolute; left:45%; top:1%;
                <div class="servicebutton">
                   <input type="button" class="bothB" id="oneB" onclick="getAcPlanPage('tmainservice','/AcPlanPage')">
                   <input type="button" class="bothB" id="twoB" onclick="getPage('tmainservices','/TGradePage')"> 
-                  <input type="button" class="bothB" id="threeB" onclick=""> 
+                  <input type="button" class="bothB" id="threeB" onclick="getPage('tmainservices','/TAttendancePage')"> 
                   <input type="button" class="bothB" id="fourB" onclick="">
                    <input type="button" class="bothB" id="fiveB" onclick="">
                    <input type="button" class="bothB" id="sixB" onclick="getPage('tmainservices','/InfoPage')">  
@@ -243,9 +244,16 @@ position:absolute; left:45%; top:1%;
             <div id="mainpage"></div>
          </div>
       </div>
-   </form>
-
+	</form>
+</body>
 <script>
+function getNextPage(data) {
+	const f = document.getElementsByName("tMainService")[0];
+	const email = makeInputElement("hidden","email",data,"");
+	f.appendChild(email);
+	document.getElementsByName("email")[0];
+	f.submit();
+}
    function mouseOver(obj) {
       let fColor = (obj.id == "btn") ? "#000000" : "#FFFFFF";
       obj.style.color = fColor;
@@ -262,4 +270,4 @@ position:absolute; left:45%; top:1%;
 
    }
 </script>
-</body></html>
+</html>

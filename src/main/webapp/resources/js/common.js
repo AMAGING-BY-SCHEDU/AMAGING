@@ -66,6 +66,21 @@ function getPage(formName,action){
       form.setAttribute("action",action);
       form.submit();  
 
+function accessAdminOut(){
+		const form = makeForm("", "/Logout", "post");
+		const uId = document.getElementsByName("userId")[0].value;
+		const uc = document.getElementsByName("userCode")[0].value;
+		const ac = document.getElementsByName("acCode")[0].value;
+		const userId = makeInputElement("hidden", "userId", uId, "");
+		const userCode = makeInputElement("hidden", "userCode", uc, "");
+		const acCode = makeInputElement("hidden", "acCode", ac, "");	
+		form.appendChild(userId);
+		form.appendChild(userCode);
+		form.appendChild(acCode);
+		document.body.appendChild(form);
+	    form.submit();   
+}
+
 function findPassword(formName) {
 	const form = document.getElementsByName(formName)[0];
 	/* input개체에 대한 값의 유효성 체크 */

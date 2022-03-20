@@ -168,3 +168,10 @@ public class MovePageController {
       return mav;
    }
 }
+	@PostMapping("/TAttendancePage")
+	public ModelAndView TAPage(ModelAndView mav, @ModelAttribute UserInfo uf) {
+		ad.backController(1, mav.addObject("uf",uf));
+		return mav;
+	}
+}
+

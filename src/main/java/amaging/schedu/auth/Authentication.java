@@ -130,7 +130,6 @@ public class Authentication extends amaging.schedu.common.CommonMethod{
 		String page = "";
 		String message ="";
 		boolean tran=false;
-
 		//PROPAGATION, ISOLATION설정
 		this.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED, 
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
@@ -159,8 +158,8 @@ public class Authentication extends amaging.schedu.common.CommonMethod{
 	}else{tran=false;}
 		// Commit;
 		this.setTransactionEnd(tran);
-			mav.setViewName(page);
-			mav.getModelMap().addAttribute("msg", message);
+		mav.getModelMap().addAttribute("msg", message);
+		mav.setViewName(page);
 	}
 	private void getChildList(ModelAndView mav) {
 		ChildCode cc = new ChildCode();

@@ -34,7 +34,6 @@ public interface QMLOracleMapper {
 	public UserInfo getAdminInfo(Login login);
 	
 	/*회원등록*/
-
 	public int setStudentData(RegMember regM);
 	public int setParentsData(RegMember regM);
 	public int setTeacherData(RegMember regM);

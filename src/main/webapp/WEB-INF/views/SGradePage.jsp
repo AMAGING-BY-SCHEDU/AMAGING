@@ -7,6 +7,7 @@
 <title>학생 성적 페이지</title>
  <script src="resources/js/common.js"></script>
  <script src="resources/js/gradePage.js"></script>
+
 <style>
 #frame {
 	width: 100%;

@@ -35,6 +35,8 @@ public class AuthController {
 		auth.backController(4,mav.addObject("rm", rm));	
 		return mav;
 	}
+
+	@SuppressWarnings("unchecked")
 	@PostMapping(value="/GetChildList")
 	public @ResponseBody List<ChildCode> getChildList(ModelAndView mav, @RequestBody@ModelAttribute ChildCode cc) {
 		auth.backController(5,mav.addObject("cc", cc));

@@ -8,13 +8,23 @@
  <script src="resources/js/common.js"></script>
 <script src=""></script>
 <script>
-	function test() {
-		let form = document.getElementById("damnnn");
-		let damn = document.getElementById("damn");
-		form.appendChild(damn);
-		form.submit();
-	}
+	function getPage3(userCode) {
+  		const f = document.getElementsByName("TApage")[0];
+   	 	const hidden = makeInputElement("hidden","userCode",userCode,"");
+    	f.appendChild(hidden);
+    	document.getElementsByName("userCode")[0];
+    	f.submit();
+ 	}
 	
+	function makeInputElement(type, name, value, placeholder){
+		const input = document.createElement("input");
+		input.setAttribute("type", type);
+		input.setAttribute("name", name);
+		if(value != ""){input.setAttribute("value", value);}
+		if(placeholder != ""){input.setAttribute("placeholder", placeholder);}
+		
+		return input;
+	}
 	function ajax() {
 		
 	}

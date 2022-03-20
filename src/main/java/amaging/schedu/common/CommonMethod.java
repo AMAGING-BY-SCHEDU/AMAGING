@@ -19,7 +19,7 @@ public class CommonMethod {
 	protected DefaultTransactionDefinition txDef;
 	public CommonMethod() {
 	}
-	protected boolean convertToBoolean(int number) {
+	public boolean convertToBoolean(int number) {
 		return number>0?true:false;
 	}
 	protected void setTransactionConf(int propa, int iso, boolean isRead) {

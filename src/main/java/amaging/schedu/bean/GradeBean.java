@@ -15,6 +15,5 @@ public class GradeBean {
 	int score;
 	int rank;
 	int headCount;
-
 }
 

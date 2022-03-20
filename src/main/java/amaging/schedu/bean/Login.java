@@ -6,4 +6,5 @@ public class Login {
 	String password;
 	String adCode;
 	int userCode;
+	String adCode;
 }
